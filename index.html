@@ -522,14 +522,14 @@ function showReport(d){
   :["Pertahankan kebiasaan menimbang sebelum menjawab.","Saat menolak, sertakan satu kalimat hangat.","Tawarkan alternatif kecil kalau memang mau membantu.","Perhatikan apakah kamu terlalu cepat menolak permintaan yang wajar.","Bantu satu orang tanpa diminta, dengan batas yang kamu tentukan sendiri.","Refleksikan: kapan menolong membuatmu senang, bukan terbebani?","Tinjau lagi keseimbangan antara menolong dan menjaga diri."];
  const asp=[["Kepatuhan pada permintaan tidak wajar",d.comp],["Luluh saat dibuat merasa bersalah",d.cave],["Kecenderungan mengabaikan diri",d.self],["Batas mudah didorong",d.push]];
  const tl=S.log.filter(l=>!l.other).map(l=>({t:(l.pressure?"(saat ditekan) ":"")+(R.find(r=>r.c===l.lv&&(l.ans!==undefined))?"":""),q:l.req||"",a:l.a.stance}));
- const steps=S.log.filter(l=>!l.other);
+ const steps=S.log.filter(l=>!l.other);let nq=0;
  $("repIn").innerHTML='<div class="rep-h"><div><small>Hasil analisis · People-Pleaser Detector</small><h2 id="repT">'+esc(d.type)+'</h2><p class="rep-desc">'+esc(d.desc)+'</p></div><div class="gauge" style="--v:'+d.total+'"><span>'+d.total+'</span></div></div>'
  +'<h3>Tingkat per aspek</h3><div class="asp">'+asp.map(a=>{const L=lvl(a[1]);return'<div><span class="val">'+a[1]+'/100</span><b>'+esc(a[0])+'</b><span class="lv '+L[1]+'">'+L[0]+'</span></div>'}).join('')+'</div>'
  +'<h3>Pola utama menurut AI</h3><div>'+d.P.map(x=>'<p>'+esc(x)+'</p>').join('')+'</div>'
  +'<h3>Kekuatanmu</h3><ul>'+kuat.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul>'
  +'<h3>Yang perlu dilatih</h3><ul>'+latih.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul>'
  +'<h3>Rencana latihan 7 hari</h3><ol class="plan">'+plan.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ol>'
- +'<h3>Rekap jawabanmu</h3><div class="tl">'+steps.map((l,k)=>'<div><span>'+(l.pressure?"Saat ditekan: ":"Permintaan "+(k+1)+": ")+esc(l.ans.length>60?l.ans.slice(0,57)+"…":l.ans)+'</span><em class="'+l.a.stance+'">'+LBL[l.a.stance]+'</em></div>').join('')+'</div>'
+ +'<h3>Rekap jawabanmu</h3><div class="tl">'+steps.map(l=>'<div><span>'+(l.pressure?"Saat ditekan: ":"Permintaan "+(++nq)+": ")+esc(l.ans.length>60?l.ans.slice(0,57)+"…":l.ans)+'</span><em class="'+l.a.stance+'">'+LBL[l.a.stance]+'</em></div>').join('')+'</div>'
  +'<div class="warn">Ini hasil alat eksplorasi diri yang belum divalidasi secara psikometrik, <b>bukan diagnosis klinis</b>. Kalau kebiasaan mengalah sudah membuatmu tertekan, cemas, atau kelelahan, ngobrol dengan psikolog atau layanan konseling kampus bisa sangat membantu.</div>'
  +'<div class="rep-acts"><button class="btn" id="repPdf">Simpan PDF</button><button class="btn ghost" id="repCopy">Salin ringkasan</button><button class="btn ghost" id="repX">Tutup</button></div><p class="note" id="repMsg" aria-live="polite"></p>';
  const rep=$("rep");rep.classList.add("on");document.body.classList.add("lock");rep.scrollTop=0;
