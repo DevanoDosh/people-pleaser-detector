@@ -47,6 +47,10 @@ h2{font-family:"Playfair Display",Georgia,serif;font-size:24px;line-height:1.15;
 button{font:inherit;cursor:pointer}
 .opt{min-height:46px;border-radius:14px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);text-align:left;padding:10px 14px;font-weight:600}
 .opt:hover{border-color:var(--vio)}
+.opt{display:flex;gap:10px;align-items:flex-start;line-height:1.35;animation:pop .3s ease-out both}
+.opt .ol{flex:none;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:#2e2714;color:var(--gold2);font-size:13px;font-weight:800}
+.opt:active{transform:scale(.98)}
+.opts{max-height:46%;overflow-y:auto}
 .opt:focus-visible,.btn:focus-visible,.lk:focus-visible{outline:3px solid var(--yel);outline-offset:2px}
 .btn{min-height:48px;border:0;border-radius:999px;padding:0 26px;background:linear-gradient(180deg,var(--gold2),var(--gold));color:#0b0a08;font-weight:800;font-size:16px}
 .btn.alt{background:transparent;color:var(--gold2);border:1.5px solid var(--gold)}
@@ -246,7 +250,7 @@ body.lock{overflow:hidden}
    <h1 class="wt" id="wTitle">Seberapa sering kamu bilang "iya"?</h1>
    <p class="wsub">People-Pleaser Detector · tes berbasis jurnal psikologi</p>
    <button class="btn wgo" data-go>Mulai tes</button>
-   <p class="wnote">Sekitar 4 menit · tidak ada data yang disimpan</p>
+   <p class="wnote">Sekitar 3 menit · tidak ada data yang disimpan</p>
   </div>
   <div class="stage" id="stage" aria-hidden="true"><div class="sway"><div class="ph3d"><div class="scr3d">
    <div class="top3d"><i>R</i>Raka</div>
@@ -258,7 +262,7 @@ body.lock{overflow:hidden}
    <div class="wb" style="--d:3.9s;--z:72px;--s:19px">Pinjam akun ujianmu dong!</div>
    <div class="wb me dots" style="--d:4.5s;--z:60px">…</div>
   </div></div></div></div>
-  <div class="wfoot"><button class="btn wgo" data-go>Mulai tes</button><p class="wnote">Sekitar 4 menit · tidak ada data yang disimpan</p></div>
+  <div class="wfoot"><button class="btn wgo" data-go>Mulai tes</button><p class="wnote">Sekitar 3 menit · tidak ada data yang disimpan</p></div>
  </div>
 </div>
 <canvas id="dust" aria-hidden="true"></canvas><div class="spot" aria-hidden="true"></div><div class="bgw" id="bgw" aria-hidden="true"></div>
@@ -267,13 +271,13 @@ body.lock{overflow:hidden}
  <div class="wrap">
   <div>
    <h1 data-par="0.18" class="shine">People-Pleaser Detector</h1>
-   <p class="lead">Temanmu, Raka, akan chat minta tolong. Awalnya sepele, makin lama makin keterlaluan. Ketik balasanmu sendiri, persis seperti kamu biasa membalas. Kamu juga boleh bertanya balik ("kenapa?", "kapan?", "berapa?"), Raka akan menjawab. Setiap balasanmu langsung dianalisis AI: menerima, memberi syarat, menolak, atau masih bertanya, plus tanda-tanda dari kata-katamu.</p>
+   <p class="lead">Temanmu, Raka, akan chat minta tolong. Awalnya sepele, makin lama makin keterlaluan. Ada 10 pertanyaan. Pilih jawaban yang paling mirip dengan yang biasanya kamu lakukan, bukan yang menurutmu paling benar. Setiap pilihan langsung dianalisis AI.</p>
    <ol class="steps">
-    <li><b>1</b><span>Simulasi chat: 10 permintaan bertingkat (pola <em>foot-in-the-door</em>), dijawab dengan mengetik bebas.</span></li>
-    <li><b>2</b><span>6 pernyataan singkat tentang kebiasaanmu.</span></li>
-    <li><b>3</b><span>Hasil: skor, tipe, dan rincian per aspek.</span></li>
+    <li><b>1</b><span>10 pertanyaan pilihan ganda dalam bentuk chat, permintaannya makin lama makin berat (pola <em>foot-in-the-door</em>).</span></li>
+    <li><b>2</b><span>Sesekali Raka membuatmu merasa bersalah. Pilih lagi responsmu.</span></li>
+    <li><b>3</b><span>Laporan hasil lengkap muncul otomatis di akhir.</span></li>
    </ol>
-   <p class="note">Sekitar 4 menit. Tidak ada data yang dikirim atau disimpan, semuanya dihitung di perangkatmu.</p>
+   <p class="note">Sekitar 3 menit. Tidak ada data yang dikirim atau disimpan, semuanya dihitung di perangkatmu.</p>
   </div>
   <div class="phone" data-par="-0.06"><div class="screen" id="scr"></div></div>
  </div>
@@ -288,9 +292,9 @@ body.lock{overflow:hidden}
    <ol class="pnav" id="pnav"><li class="on">Unmitigated communion</li><li>Foot-in-the-door</li><li>Asertivitas</li></ol>
   </div>
   <div class="pcards" id="pcards">
-   <article class="pcard on"><span class="lbl">Dasar 1 dari 3</span><h3>Unmitigated communion</h3><p class="cite">Helgeson &amp; Fritz (1998), Personality and Social Psychology Review</p><p>Fokus pada orang lain sampai mengabaikan diri sendiri: terlalu terlibat dalam urusan orang dan menelantarkan kebutuhan pribadi. Pola ini berkaitan dengan distres psikologis.</p><p class="use">Dipakai di: kuesioner 6 butir di akhir tes.</p></article>
-   <article class="pcard"><span class="lbl">Dasar 2 dari 3</span><h3>Foot-in-the-door</h3><p class="cite">Freedman &amp; Fraser (1966), Journal of Personality and Social Psychology</p><p>Orang yang sudah menuruti permintaan kecil lebih mungkin menuruti permintaan yang lebih besar setelahnya.</p><p class="use">Dipakai di: 10 permintaan Raka yang makin lama makin keterlaluan.</p></article>
-   <article class="pcard"><span class="lbl">Dasar 3 dari 3</span><h3>Asertivitas</h3><p class="cite">Speed, Goldstein &amp; Goldfried (2018), Clinical Psychology: Science and Practice</p><p>Kemampuan menyatakan keinginan dan menolak secara langsung. Pelatihan asertivitas termasuk intervensi berbasis bukti.</p><p class="use">Dipakai di: analisis AI pada setiap balasanmu, termasuk saat kamu dibuat merasa bersalah.</p></article>
+   <article class="pcard on"><span class="lbl">Dasar 1 dari 3</span><h3>Unmitigated communion</h3><p class="cite">Helgeson &amp; Fritz (1998), Personality and Social Psychology Review</p><p>Fokus pada orang lain sampai mengabaikan diri sendiri: terlalu terlibat dalam urusan orang dan menelantarkan kebutuhan pribadi. Pola ini berkaitan dengan distres psikologis.</p><p class="use">Dipakai di: pilihan jawaban yang menunjukkan kamu mengorbankan kebutuhan sendiri.</p></article>
+   <article class="pcard"><span class="lbl">Dasar 2 dari 3</span><h3>Foot-in-the-door</h3><p class="cite">Freedman &amp; Fraser (1966), Journal of Personality and Social Psychology</p><p>Orang yang sudah menuruti permintaan kecil lebih mungkin menuruti permintaan yang lebih besar setelahnya.</p><p class="use">Dipakai di: 10 pertanyaan Raka yang makin lama makin keterlaluan.</p></article>
+   <article class="pcard"><span class="lbl">Dasar 3 dari 3</span><h3>Asertivitas</h3><p class="cite">Speed, Goldstein &amp; Goldfried (2018), Clinical Psychology: Science and Practice</p><p>Kemampuan menyatakan keinginan dan menolak secara langsung. Pelatihan asertivitas termasuk intervensi berbasis bukti.</p><p class="use">Dipakai di: analisis AI pada setiap pilihanmu, termasuk saat kamu dibuat merasa bersalah.</p></article>
   </div>
   <div class="pdots" id="pdots" aria-label="Pilih kartu"><button aria-label="Kartu 1" aria-current="true"></button><button aria-label="Kartu 2"></button><button aria-label="Kartu 3"></button></div>
  </div>
@@ -325,9 +329,9 @@ body.lock{overflow:hidden}
    <div class="scroll"><table class="map"><thead><tr><th>Bagian tes</th><th>Dasar</th></tr></thead><tbody>
     <tr><td>Kepatuhan pada permintaan tidak wajar</td><td>Foot-in-the-door; asertivitas</td></tr>
     <tr><td>Luluh saat dibuat merasa bersalah</td><td>Asertivitas (bertahan pada penolakan)</td></tr>
-    <tr><td>Kuesioner 6 butir</td><td>Konstruk UC (butir ditulis ulang, bukan skala asli)</td></tr>
-    <tr><td>Jeda sebelum mengetik &amp; jumlah hapusan</td><td>Indikator eksploratif, tidak ada norma baku</td></tr>
-    <tr><td>Analisis AI tiap jawaban</td><td>Klasifikasi teks + deteksi tanda asertif / tidak asertif</td></tr>
+    <tr><td>Pilihan yang mengabaikan diri</td><td>Konstruk UC (self-neglect)</td></tr>
+    <tr><td>Jeda sebelum memilih</td><td>Indikator eksploratif, tidak ada norma baku</td></tr>
+    <tr><td>Analisis AI tiap pilihan</td><td>Penilaian sikap + tanda asertif / tidak asertif</td></tr>
    </tbody></table></div>
   </div>
   <div class="box rv">
@@ -339,184 +343,87 @@ body.lock{overflow:hidden}
     <li>Burger, J. M. (1999). The foot-in-the-door compliance procedure: A multiple-process analysis and review. <em>Personality and Social Psychology Review, 3</em>(4), 303–325.</li>
     <li>Speed, B. C., Goldstein, B. L., &amp; Goldfried, M. R. (2018). Assertiveness training: A forgotten evidence-based treatment. <em>Clinical Psychology: Science and Practice, 25</em>(1).</li>
    </ol>
-   <p class="note"><b>Tentang AI-nya.</b> Analisis berjalan sepenuhnya di browser, tanpa server dan tanpa API key. AI utamanya adalah model bahasa multibahasa (paraphrase-multilingual-MiniLM, ±120 MB, diunduh sekali lalu tersimpan di browser) yang membaca <i>makna</i> balasanmu dan membandingkannya dengan contoh-contoh berlabel: menerima, bersyarat, menolak (termasuk menolak tidak langsung), bertanya, atau belum jelas. Kalau perangkatmu tidak kuat memuat model itu, web otomatis memakai mode ringan (Naive Bayes). Keduanya dilengkapi aturan pendeteksi tanda seperti minta maaf berlebihan, alasan panjang, menawarkan alternatif, dan luluh oleh rasa bersalah. AI ini bisa salah membaca kalimat yang ambigu atau sarkas.</p>
-   <p class="note">Cara skor: permintaan wajar tidak dihitung (menolong itu baik). Untuk permintaan setengah wajar dan tidak wajar: menerima = 2, bersyarat = 1, menolak = 0, dikali bobot tingkat keterlaluan. Skor akhir = 60% perilaku di chat + 40% kuesioner.</p>
+   <p class="note"><b>Tentang AI-nya.</b> Setiap opsi jawaban sudah dipetakan ke sikap (menerima, bersyarat, menolak) dan ke tanda perilaku berdasarkan teori di atas, misalnya minta maaf berlebihan, menolak tidak langsung, atau mengabaikan diri. Sistem analisis otomatis lalu merangkai penjelasan dari pilihanmu, lama kamu ragu, dan polanya sepanjang tes. Semuanya berjalan di browser, tanpa server dan tanpa API key. Urutan opsi diacak di setiap pertanyaan.</p>
+   <p class="note">Cara skor: permintaan wajar tidak dihitung (menolong itu baik). Untuk permintaan setengah wajar dan tidak wajar: menerima = 2, bersyarat = 1, menolak = 0, dikali bobot tingkat keterlaluan. Skor akhir = 60% kepatuhan + 40% kecenderungan mengabaikan diri.</p>
   </div>
  </div>
 </section>
 
 <script>
 {
-/* ===== AI lokal: Naive Bayes + deteksi tanda (tanpa API key) ===== */
-const TRAIN={
- terima:["iya boleh","oke siap","boleh banget","gas","iya nanti aku bantu","siap nanti aku absenin","boleh kok santai aja","oke nanti kutransfer","iya gapapa aku aja","bisa bisa","tenang aja aku urus","yaudah sini aku kerjain","oke aku jemput","ya ampun boleh lah","sip nanti kukirim","iya deh","oke deh gapapa","boleh kapan","iya aku bantuin","pasti bisa kok","yaudah deh aku bantu","oke aku yang presentasi","iya nanti aku ke stasiun","boleh ambil aja","santai pake aja","siap laksanakan","oke sabtu aku dateng","iya aku pinjemin","boleh nih login aja","yaudah aku transfer sekarang","bisa deh","bisa kok","bisa banget","aman bisa","boleh deh"],
- syarat:["boleh tapi minggu depan diganti ya","bisa sih asal jangan sering sering","boleh tapi aku cuma bisa sampai jam 9","oke tapi kamu yang traktir","aku bantu sebagian aja ya","bisa kalau kamu kerjain bagian lain","boleh tapi ini terakhir ya","kalau sempet ya nggak janji","aku bantu setengah hari aja","boleh tapi ganti bensin","aku bisa kasih 20 ribu aja","aku ajarin caranya aja ya bukan aku yang kerjain","boleh asal kamu ganti tepat waktu","bisa tapi nanti gantian bantu aku","oke tapi lain kali bilang dari jauh hari","kalau cuma sebentar sih bisa","aku bisanya pagi doang","boleh tapi aku cek jadwal dulu","mungkin bisa tapi nggak janji","aku temenin aja tapi nggak angkat barang","boleh tapi yang kemarin dibalikin dulu","aku bantu bikin kerangka aja","bisa kalau aku udah pulang kerja","nanti aku kabarin ya bisa atau nggak","hmm kayaknya bisa deh","aku pikir dulu ya","nanti aku pikirin dulu","aku cek dulu ya","belum tahu nanti kukabari","mungkin bisa ya","bisa sih kayaknya","kayaknya bisa tapi liat nanti","duh mungkin bisa","oke tapi kamu yang presentasi bagian penutup"],
- tolak:["maaf nggak bisa","nggak bisa","sorry aku nggak bisa","nggak ah","aduh maaf aku lagi bokek","nggak itu curang","maaf ya aku nggak mau","nggak bisa aku ada acara","nggak dulu deh","maaf aku juga lagi sibuk","tidak itu melanggar aturan","aku nggak nyaman titip absen","nggak kerjain sendiri ya","ogah","maaf banget aku nggak bisa jemput","nggak bisa yang kemarin aja belum diganti","aku nggak bisa bantu kali ini","no","nggak bisa bro","sorry akun ujian nggak bisa dipinjem","maaf tetap nggak bisa","nggak deh aku capek","aku nggak mau bohongin dosen","maaf aku nggak minjemin uang","nggak itu bagian kamu","maaf sabtu aku ada kerja","tetap nggak ya","aku pass dulu","nggak dulu ya kali ini","maaf aku nggak bisa presentasiin bagianmu"]
-};
-const NORM={gak:"nggak",ga:"nggak",ngga:"nggak",enggak:"nggak",engga:"nggak",kaga:"nggak",gk:"nggak",tdk:"nggak",tidak:"nggak",nda:"nggak",ndak:"nggak",nope:"no",gpp:"gapapa","ga-papa":"gapapa",gw:"aku",gue:"aku",aq:"aku",saya:"aku",bs:"bisa",tp:"tapi",tpi:"tapi",tapii:"tapi",ok:"oke",okay:"oke",okee:"oke",oce:"oke",yoi:"oke",sip:"oke",siap:"oke",yaudah:"yaudah",yaudh:"yaudah",udh:"udah",sdh:"udah",sory:"sorry",sori:"sorry",maap:"maaf",mf:"maaf",bgt:"banget",jg:"juga",dlu:"dulu",dl:"dulu",kmu:"kamu",km:"kamu",lu:"kamu",lo:"kamu",yg:"yang",klo:"kalau",kalo:"kalau",asalkan:"asal",y:"ya",yaa:"ya",iyaa:"iya",iyap:"iya",yup:"iya",yes:"iya",yo:"iya"};
-const tok=s=>{const w=s.toLowerCase().replace(/\b(ga|gak|nggak|ngga|g)bisa\b/g,"nggak bisa").replace(/\bgbs\b/g,"nggak bisa").replace(/[^a-z0-9\s-]/g," ").split(/\s+/).filter(Boolean).map(x=>NORM[x]||x);const out=[...w];for(let k=0;k<w.length-1;k++)out.push(w[k]+"_"+w[k+1]);return out};
-const NB=(()=>{const m={},V=new Set();for(const c in TRAIN){m[c]={n:0,f:{}};TRAIN[c].forEach(s=>tok(s).forEach(t=>{m[c].f[t]=(m[c].f[t]||0)+1;m[c].n++;V.add(t)}))}
- return s=>{const ts=tok(s),lp={};for(const c in m){let p=Math.log(1/3);ts.forEach(t=>{p+=Math.log(((m[c].f[t]||0)+1)/(m[c].n+V.size))});lp[c]=p}
-  const mx=Math.max(...Object.values(lp)),ex={};let z=0;for(const c in lp){ex[c]=Math.exp(lp[c]-mx);z+=ex[c]}for(const c in ex)ex[c]/=z;return ex}})();
-
-/* ===== AI paham makna: embedding multibahasa (transformers.js) + kNN contoh berlabel ===== */
-const EX={
- terima:["iya boleh","oke siap","boleh banget","gas lah","siap bos","aman nanti aku urus","yaudah sini aku kerjain","oke nanti aku kirim","iya iya boleh","bisa kok tenang aja","sip aku bantuin","yaudah deh demi kamu","boleh dong masa nggak","iya nanti aku transfer","oke aku jemput ya","iya aku yang presentasi","santai pake aja","boleh ambil aja","oke sabtu aku dateng","iya ini akunku","yaudah aku absenin","pasti bisa kok","iya gapapa","oke deh"],
- syarat:["boleh tapi minggu depan diganti ya","bisa sih asal jangan sering-sering","boleh tapi aku cuma bisa sampai jam 9","aku bantu sebagian aja ya","boleh tapi ini terakhir ya","kalau sempet ya, nggak janji","aku bisa kasih 20 ribu aja","aku ajarin caranya aja ya, bukan aku yang kerjain","boleh asal kamu ganti tepat waktu","bisa tapi nanti gantian bantu aku","kalau cuma sebentar sih bisa","aku bisanya pagi doang","boleh tapi aku cek jadwal dulu","aku temenin aja tapi nggak angkat barang","boleh tapi yang kemarin dibalikin dulu","aku bantu bikin kerangka aja","aku pikir dulu ya","nanti aku kabarin bisa atau nggak","hmm kayaknya bisa deh","mungkin bisa, liat nanti"],
- tolak:["maaf nggak bisa","nggak bisa","sorry aku nggak bisa","nggak ah","maaf aku lagi bokek","nggak, itu curang","aku nggak mau","nggak dulu deh","maaf aku juga lagi sibuk","itu melanggar aturan","aku nggak nyaman titip absen","kerjain sendiri ya","ogah","nggak bisa, yang kemarin aja belum diganti","maaf tetap nggak bisa","aku nggak mau bohongin dosen","itu bagian kamu","skip dulu","pass","bisa minta yang lain ga sih","minta yang lain aja ya","coba tanya yang lain deh","kenapa nggak minta ke yang lain aja","kok aku terus sih","masa aku lagi","sama yang lain aja","cari orang lain deh","pake ojol aja","itu kan tanggung jawab kamu","duh jangan aku deh","lain kali aja, sekarang nggak","aku juga butuh uangnya","nggak usah ya","aku nggak bakal kasih akunku"],
- tanya:["kamu kenapa emangnya","kapan butuhnya","berapa lama","emang kamu sakit?","buat apa uangnya","jam berapa","di mana","kenapa kamu nggak dateng","sekarang banget?","bagian yang mana","berapa banyak","kamu pas itu ke mana","gimana caranya","beneran?","serius?","kok bisa telat","kamu sakit atau gimana","emang yang lain ke mana","kenapa harus hari sabtu","itu buat apa"],
- kabur:["halo","wkwk","hmm","lagi apa","bentar","haha","apa sih","oh","lol","sabar","eh","ya ampun","hah","p","anjir"]
-};
-const AIURL="https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.0.2";
-let EMB=null,EXV=null,aiState="loading",aiTxt="memuat AI…",aiReady;
-const setAI=t=>{aiTxt=t;const el=document.getElementById("aist");if(el)el.textContent=t};
-aiReady=(async()=>{try{
- const {pipeline,env}=await import(AIURL);env.allowLocalModels=false;
- EMB=await pipeline("feature-extraction","Xenova/paraphrase-multilingual-MiniLM-L12-v2",{dtype:"q8",progress_callback:x=>{if(x.status==="progress"&&/onnx/.test(x.file||""))setAI("memuat AI "+Math.round(x.progress||0)+"%")}});
- setAI("menyiapkan AI…");
- const all=[];for(const c in EX)EX[c].forEach(t=>all.push([c,t]));
- const out=await EMB(all.map(x=>x[1]),{pooling:"mean",normalize:true});const d=out.dims[1],D=out.data;
- EXV=all.map((x,k)=>({c:x[0],v:D.slice(k*d,(k+1)*d)}));aiState="ready";setAI("AI siap");
-}catch(e){console.warn(e);aiState="fail";setAI("AI mode ringan")}})();
-async function embProbs(text){
- if(aiState==="loading"){await Promise.race([aiReady,new Promise(r=>setTimeout(r,15000))])}
- if(aiState!=="ready")return null;
- try{const o=await EMB([text],{pooling:"mean",normalize:true}),v=o.data,sims={};
-  EXV.forEach(e=>{let s=0;for(let k=0;k<v.length;k++)s+=v[k]*e.v[k];(sims[e.c]=sims[e.c]||[]).push(s)});
-  const sc={};for(const c in sims){const a=sims[c].sort((x,y)=>y-x).slice(0,3);sc[c]=a.reduce((x,y)=>x+y,0)/a.length}
-  const mx=Math.max(...Object.values(sc));let z=0;const p={};for(const c in sc){p[c]=Math.exp((sc[c]-mx)/.04);z+=p[c]}for(const c in p)p[c]/=z;return p}catch(e){return null}}
-const DEFLECT=/\b(yang lain|orang lain|minta (ke )?(yang|orang)|cari (yang|orang)|sendiri (aja|lah|ya|dong)|kerjain sendiri|kok aku|masa aku|jangan aku|kenapa (harus )?aku|pake ojol|naik ojol|tanggung jawab kamu|bagian kamu)\b/;
-const cnt=(re,s)=>(s.match(re)||[]).length;
-function analyze(text,req,meta,ep){
- const s=text.toLowerCase().replace(/\b(ga|gak|nggak|ngga|g)bisa\b/g,"nggak bisa");let p=NB(text);const W=ep?.4:1;
- if(ep){const t=ep.terima+ep.syarat+ep.tolak||1;p={terima:.8*ep.terima/t+.2*p.terima,syarat:.8*ep.syarat/t+.2*p.syarat,tolak:.8*ep.tolak/t+.2*p.tolak}}
- const defl=DEFLECT.test(s);if(defl)p.tolak+=.6;
- /* aturan penguat: kata kunci tegas mengoreksi model */
- if(/\b(nggak|gak|ga|ngga|enggak|tidak|ogah|no)\b.*\b(bisa|mau|dulu|deh|ah|ya)\b|\b(pass|ogah)\b/.test(s)&&!/\btapi\b/.test(s))p.tolak+=.5*W;
- if(/\b(tapi|asal|asalkan|kalau|kecuali|setengah|sebagian|cuma bisa|nggak janji)\b/.test(s)&&!/^(maaf|sorry)?\s*(nggak|gak|ga|tidak)\b/.test(s)&&!defl)p.syarat+=.35*W;
- const z=p.terima+p.syarat+p.tolak;for(const c in p)p[c]/=z;
- const stance=Object.keys(p).sort((a,b)=>p[b]-p[a])[0],conf=p[stance];
- const words=s.split(/\s+/).filter(Boolean).length,maaf=cnt(/\b(maaf|maap|sorry|sori|mf)\b/g,s);
- const sig=[],say=[];
- if(defl&&stance==="tolak"){sig.push("menolak tidak langsung");say.push("Kamu menolak secara tidak langsung, misalnya dengan mengalihkan ke orang lain atau menyuruh dia mengurus sendiri. Batasnya ada, tapi cara tidak langsung kadang membuat orang lain mencoba lagi.")}
- if(maaf>=2){sig.push("minta maaf berlebihan");say.push("Ada "+maaf+" kata maaf. Minta maaf berulang sering menandakan rasa bersalah saat menolak, padahal menolak bukan kesalahan.")}
- else if(maaf===1&&stance==="tolak"){sig.push("menolak dengan sopan");say.push("Satu kata maaf cukup: sopan tanpa terdengar merasa bersalah.")}
- if(stance!=="terima"&&words>=18&&/\b(soalnya|karena|karna|habisnya|abisnya|lagian|sebenernya|sebenarnya)\b/.test(s)){sig.push("alasan panjang");say.push("Kamu menjelaskan alasan cukup panjang ("+words+" kata). Orang yang sulit menolak sering merasa penolakan harus dibenarkan dulu.")}
- if(/\b(lain kali|gimana kalau|gmn kalau|aku bisanya|aku bantu .* aja|ajarin|kerangka|temenin)\b/.test(s)){sig.push("menawarkan alternatif");say.push("Kamu menawarkan jalan lain. Ini cara menjaga hubungan tanpa mengorbankan diri.")}
- if(stance==="tolak"&&words<=6&&maaf===0){sig.push("menolak tegas");say.push("Penolakanmu singkat dan langsung, tanpa pembenaran. Itu ciri asertif.")}
- if(/\b(curang|melanggar|nggak etis|aturan|nggak nyaman|bohong)\b/.test(s)){sig.push("menetapkan batas nilai");say.push("Kamu menyebut alasan nilai atau aturan. Batas seperti ini paling sulit digeser orang lain.")}
- if(/\b(hmm+|duh|aduh|eh|kayaknya|mungkin|sepertinya|bingung)\b/.test(s)){sig.push("ragu");say.push("Ada kata-kata ragu (hmm, kayaknya, mungkin). Jawaban yang menggantung sering dibaca orang lain sebagai \"masih bisa dibujuk\".")}
- if(/\b(ogah|males|apaan|ngapain|enak aja)\b/.test(s)){sig.push("nada ketus");say.push("Nadamu cukup ketus. Batasnya jelas, tapi bisa memicu konflik. Menolak tetap bisa hangat.")}
- if(meta.pressure&&stance==="terima"){sig.push("luluh oleh rasa bersalah");say.push("Kamu berubah jadi menerima setelah Raka membuatmu merasa bersalah. Di titik inilah batasmu paling mudah bergeser.")}
- if(meta.first>6){sig.push("lama sebelum mengetik");say.push("Kamu butuh "+meta.first.toFixed(1)+" detik sebelum mulai mengetik.")}
- if(meta.del>=12){sig.push("banyak menghapus");say.push("Kamu menghapus "+meta.del+" karakter sebelum mengirim, tanda sedang menimbang kata.")}
+/* ===== 10 pertanyaan pilihan ganda ===== */
+/* opsi: [teks, nilai (2 menerima, 1 bersyarat, 0 menolak), tanda]
+   tanda: u mengabaikan diri, m maaf berlebihan, p alasan panjang, d menolak tidak langsung, t menolak tegas, a menawarkan alternatif, n batas nilai, g luluh oleh rasa bersalah */
+const R=[
+ {t:"Eh, boleh pinjam pulpen bentar? Punyaku ketinggalan",c:0,o:[["Iya, nih ambil aja",2,""],["Boleh, tapi balikin habis kelas ya",1,""],["Aduh maaf banget, aku cuma bawa satu, maaf ya",0,"m"],["Coba pinjam ke yang lain dulu deh",0,"d"]]},
+ {t:"Bisa kirimin catatan kuliah minggu lalu? Aku nggak masuk, sakit",c:0,o:[["Boleh, nanti malam aku kirim",2,""],["Iya, aku kirim sekarang walau aku lagi sibuk banget",2,"u"],["Boleh, tapi tolong rangkum bagian yang kamu ngerti juga ya",1,"a"],["Maaf, aku lagi nggak sempat",0,"t"]]},
+ {t:"Titip absen dong nanti, aku telat dikit",c:1,o:[["Oke, nanti aku absenin",2,""],["Hmm… iya deh, walau aku takut ketahuan",2,"u"],["Nggak bisa, itu curang",0,"tn"],["Aduh maaf banget ya, soalnya dosennya galak dan aku takut kena juga, maaf banget",0,"mp"]]},
+ {t:"Pinjam 50 ribu ya, minggu depan kuganti kok",c:1,o:[["Iya, nanti aku transfer",2,""],["Boleh, tapi Senin dibalikin ya",1,""],["Aku cuma bisa pinjemin 20 ribu",1,"a"],["Maaf, aku lagi nggak bisa minjemin",0,"t"]]},
+ {t:"Nanti kamu aja ya yang presentasiin bagianku, aku belum siap",c:2,p:"Yah… padahal aku lagi pusing banget. Kukira kamu bisa diandalkan",o:[["Oke, aku yang presentasi",2,""],["Iya deh, nanti aku begadang belajar bagianmu",2,"u"],["Aku bantu bikin catatan poinnya aja, tapi tetap kamu yang presentasi",1,"a"],["Nggak bisa, itu bagianmu",0,"t"]]},
+ {t:"Jemput aku di stasiun dong, jam 11 malam. Agak jauh sih dari rumahmu",c:2,o:[["Oke, aku jemput",2,""],["Iya deh, walaupun besok aku masuk pagi",2,"u"],["Pesan ojol aja ya, nanti aku temenin chat sampai kamu sampai",0,"da"],["Maaf, kejauhan dan udah malam",0,"t"]]},
+ {t:"Tolong kerjain bagianku di tugas kelompok ya, aku sibuk kerja minggu ini",c:2,p:"Serius? Aku kira kita teman. Aku pasti bantu kamu kalau gantian",o:[["Oke, aku kerjain",2,""],["Aku bantu bikin kerangkanya aja ya",1,"a"],["Maaf banget ya, aku juga lagi banyak tugas, maaf banget, sebenarnya nggak enak…",0,"mp"],["Nggak bisa, kita bagi tugasnya adil aja",0,"tn"]]},
+ {t:"Pinjam 50 ribu lagi ya, yang kemarin nanti sekalian aku ganti",c:2,o:[["Iya, nanti aku transfer lagi",2,""],["Iya deh, walau uangku juga tinggal sedikit",2,"u"],["Yang kemarin dibalikin dulu ya, baru aku pikirin",1,""],["Maaf, aku nggak bisa minjemin lagi",0,"t"]]},
+ {t:"Sabtu bantu aku pindahan seharian ya. Kamu kan nggak ngapa-ngapain",c:2,p:"Ya ampun, cuma sehari doang. Yang lain pada nggak bisa, cuma kamu harapanku",o:[["Oke, Sabtu aku datang",2,""],["Aku bisa bantu setengah hari aja",1,"a"],["Coba minta tolong yang lain dulu deh",0,"d"],["Maaf, Sabtu aku ada acara sendiri",0,"t"]]},
+ {t:"Boleh pinjam akun ujian online-mu? Aku cuma mau lihat soalnya",c:3,o:[["Nih, aku kasih username dan password-nya",2,""],["Iya deh, tapi jangan bilang siapa-siapa ya",2,"u"],["Nggak, itu melanggar aturan ujian",0,"tn"],["Aduh maaf banget ya, aku takut ketahuan, maaf…",0,"m"]]}
+];
+const PR=[["Yaudah deh, aku bantu",2,"g"],["Hmm… oke, aku bantu sebagian aja",1,"g"],["Maaf ya, tetap nggak bisa",0,"t"]];
+const REPLY={terima:["Makasih banyak!","Kamu emang the best","Asik, makasih ya","Wah, penyelamat banget kamu"],syarat:["Oke deh, gitu juga boleh","Hmm, oke, makasih ya","Yaudah gapapa, segitu juga udah ngebantu"],tolak:["Oh, oke deh","Yaudah, gapapa","Hmm… oke","Oh gitu ya"]};
+const LBL={terima:"Menerima",syarat:"Bersyarat",tolak:"Menolak"};
+const TAG={u:["mengabaikan diri","Kamu mengiyakan walau sebenarnya sedang butuh untuk dirimu sendiri. Ini ciri utama unmitigated communion: kebutuhan orang lain didahulukan sampai kebutuhanmu terabaikan."],
+ m:["minta maaf berlebihan","Kamu minta maaf berulang kali. Ini sering menandakan rasa bersalah saat menolak, padahal menolak bukan kesalahan."],
+ p:["alasan panjang","Kamu merasa perlu menjelaskan alasan panjang. Orang yang sulit menolak sering merasa penolakan harus dibenarkan dulu."],
+ d:["menolak tidak langsung","Kamu menolak secara tidak langsung dengan mengalihkan ke pilihan atau orang lain. Batasnya ada, tapi cara tidak langsung kadang membuat orang mencoba lagi."],
+ t:["menolak tegas","Penolakanmu singkat dan langsung, tanpa pembenaran berlebihan. Itu ciri asertif."],
+ a:["menawarkan alternatif","Kamu menawarkan jalan lain. Ini cara menjaga hubungan tanpa mengorbankan diri."],
+ n:["menetapkan batas nilai","Kamu menyebut alasan nilai atau aturan. Batas seperti ini paling sulit digeser orang lain."],
+ g:["luluh oleh rasa bersalah","Kamu mengubah keputusan setelah dibuat merasa bersalah. Di titik inilah batasmu paling mudah bergeser."]};
+function analyzeChoice(o,req,meta,pressure){
+ const v=o[1],stance=v===2?"terima":v===1?"syarat":"tolak",tags=o[2].split("").filter(Boolean),lv=req.c;
  let head;
- const lv=req.c;
- if(stance==="terima")head=lv===0?"Kamu langsung membantu. Untuk permintaan wajar seperti ini, itu sehat dan tidak dihitung sebagai people-pleasing.":lv===3?"Kamu menuruti permintaan yang melanggar aturan akademik. Ini tanda batas yang sangat mudah ditembus.":"Kamu menuruti permintaan yang sebenarnya merugikanmu (tingkat keterlaluan "+lv+" dari 3).";
+ if(pressure)head=v===0?"Kamu tetap pada keputusanmu meski dibuat merasa bersalah.":v===1?"Kamu melunak sebagian setelah dibuat merasa bersalah.":"Kamu berubah jadi menerima setelah dibuat merasa bersalah.";
+ else if(stance==="terima")head=lv===0?"Kamu langsung membantu. Untuk permintaan wajar seperti ini, itu sehat dan tidak dihitung sebagai people-pleasing.":lv===3?"Kamu menuruti permintaan yang melanggar aturan akademik. Ini tanda batas yang sangat mudah ditembus.":"Kamu menuruti permintaan yang sebenarnya merugikanmu (tingkat keterlaluan "+lv+" dari 3).";
  else if(stance==="syarat")head="Kamu membantu dengan syarat. Ini kompromi: ada batas, tapi masih bisa ditawar.";
  else head=lv===0?"Kamu menolak permintaan yang wajar. Tidak salah. Perhatikan saja apakah itu karena memang tidak bisa atau karena kebiasaan.":"Kamu menolak. Batasmu terjaga.";
- return{stance,conf,score:stance==="terima"?2:stance==="syarat"?1:0,sig,text:[head,...say].join(" "),words,maaf,defl,mode:ep?"makna":"ringan"};
+ const sig=tags.map(t=>TAG[t][0]),say=tags.map(t=>TAG[t][1]);
+ if(meta.first>8){sig.push("lama sebelum memilih");say.push("Kamu butuh "+meta.first.toFixed(1)+" detik sebelum memilih. Ragu yang lama sering muncul saat ada tarik-menarik antara ingin menolak dan takut mengecewakan.")}
+ return{stance,score:v,sig,text:[head,...say].join(" "),maaf:tags.includes("m")?1:0,un:tags.includes("u")||tags.includes("g"),defl:tags.includes("d"),alt:tags.includes("a")};
 }
-
-/* ===== Data tes ===== */
-const R=[
- {t:"Eh, boleh pinjam pulpen bentar? Punyaku ketinggalan",c:0,qa:{why:"Ketinggalan di kos, tadi buru-buru banget berangkatnya",when:"Sekarang, dosennya udah masuk nih",how:"Lempar aja ke mejaku, aku duduk di belakangmu"}},
- {t:"Bisa kirimin catatan kuliah minggu lalu? Aku nggak masuk",c:0,qa:{why:"Iya, aku sakit, demam dua hari. Sekarang udah mendingan kok",when:"Malam ini kalau bisa, besok ada kuis",how:"Foto aja terus kirim lewat chat, nggak usah dirapihin"}},
- {t:"Titip absen dong nanti, aku telat dikit",c:1,qa:{why:"Kesiangan, semalem begadang ngerjain tugas",when:"Kelas jam 1 nanti",how:"Tinggal tanda tangan namaku di kertas absen, dosennya nggak bakal ngecek kok",amt:"Paling telat 30 menit lah"}},
- {t:"Pinjam 50 ribu ya, minggu depan kuganti kok",c:1,qa:{why:"Buat makan sama ongkos ojol, uang bulananku belum turun",when:"Senin depan kuganti, janji",how:"Transfer aja ke rekeningku, nanti kukirim nomornya",amt:"50 ribu aja kok, nggak lebih"}},
- {t:"Nanti kamu aja ya yang presentasiin bagianku, aku belum siap",c:2,p:"Yah… padahal aku lagi pusing banget. Kukira kamu bisa diandalkan",qa:{why:"Semalem aku kerja shift, belum sempat baca materinya sama sekali",when:"Besok pagi jam 8",how:"Slide-nya udah ada kok, kamu tinggal ngomong aja",amt:"Bagianku cuma 5 slide"}},
- {t:"Jemput aku di stasiun dong, jam 11 malam. Agak jauh sih dari rumahmu",c:2,qa:{why:"Keretanya telat terus ojol jam segitu mahal banget",when:"Jam 11 malam ini",where:"Stasiun Tanah Abang, sekitar 40 menit dari rumahmu",how:"Pakai motormu aja, aku bawa helm"}},
- {t:"Tolong kerjain bagianku di tugas kelompok ya, aku sibuk kerja minggu ini",c:2,p:"Serius? Aku kira kita teman. Aku pasti bantu kamu kalau gantian",qa:{why:"Minggu ini aku lembur tiap hari, pulang jam 10 malam terus",when:"Deadline-nya Jumat",how:"Bagianku analisis data, kamu kan jago itu",amt:"Paling 3 halaman doang"}},
- {t:"Pinjam 50 ribu lagi ya, yang kemarin nanti sekalian aku ganti",c:2,qa:{why:"Yang kemarin udah habis buat ojol, sekarang buat makan",when:"Nanti sekalian awal bulan ya",amt:"50 lagi, jadi total 100"}},
- {t:"Sabtu bantu aku pindahan seharian ya. Kamu kan nggak ngapa-ngapain",c:2,p:"Ya ampun, cuma sehari doang. Yang lain pada nggak bisa, cuma kamu harapanku",qa:{why:"Kontrakanku habis, Sabtu harus udah keluar",when:"Dari jam 7 pagi sampai sore",where:"Dari Kemanggisan ke Tangerang",how:"Angkat-angkat barang sama nyetir mobil bak sewaan"}},
- {t:"Boleh pinjam akun ujian online-mu? Aku cuma mau lihat soalnya",c:3,qa:{why:"Cuma mau lihat bentuk soalnya kok, biar nggak kaget",when:"Malam ini, ujiannya besok",how:"Kasih aja username sama password-nya, nanti langsung kuganti lagi"}}
-];
-const REPLY={terima:["Makasih banyak!","Kamu emang the best","Asik, makasih ya","Wah, penyelamat banget kamu"],syarat:["Oke deh, gitu juga boleh","Hmm, oke, makasih ya","Yaudah gapapa, segitu juga udah ngebantu"],tolak:["Oh, oke deh","Yaudah, gapapa","Hmm… oke","Oh gitu ya. Yaudah aku cari yang lain"]};
-const LBL={terima:"Menerima",syarat:"Bersyarat",tolak:"Menolak",tanya:"Bertanya dulu",kabur:"Belum jelas"};
-const QRE=/\?|\b(kenapa|knp|kok|emang|emangnya|buat apa|untuk apa|ngapain|kapan|jam berapa|berapa|brp|dimana|di mana|dmn|kemana|ke mana|darimana|dari mana|gimana|gmn|bagaimana|caranya|sakit|serius|beneran|siapa|apa)\b/;
-const ANS=/^(iya|iyaa|iyap|boleh|oke|ok|okay|siap|sip|gas|bisa|nggak|gak|ga|ngga|enggak|gabisa|tidak|maaf|sorry|sori|ogah|no|yaudah|yuk|ayo)\b/;
-const DEC=/\b(iya|boleh|oke|ok|siap|bisa|gas|sip|nggak|gak|ga|ngga|enggak|gabisa|tidak|ogah|maaf|sorry|tapi|asal|pinjemin|transfer|kerjain|jemput|bantu)\b/;
-const intentOf=(v,a,ep)=>{const s=v.toLowerCase().trim();
- if(a.defl)return"putus";
- if(ep){const dec=Math.max(ep.terima,ep.syarat,ep.tolak);if(ep.tanya>dec&&ep.tanya>.3)return"tanya";if(ep.kabur>dec&&ep.kabur>.3&&!DEC.test(s))return"kabur";if(dec>=Math.max(ep.tanya,ep.kabur))return"putus"}
- if(QRE.test(s)&&!ANS.test(s))return"tanya";
- if(/^(halo|hai|hi|hey|p|woi|oi|bro|sis|eh)\b[\s!.?]*$/.test(s))return"kabur";
- if(a.conf<.55&&!DEC.test(s))return"kabur";
- return"putus"};
-const topic=s=>{s=s.toLowerCase();return/\b(kapan|jam|lama|sampai)\b/.test(s)?"when":/\b(berapa|brp|banyak)\b/.test(s)?"amt":/\b(mana|dmn|jauh)\b/.test(s)?"where":/\b(gimana|gmn|bagaimana|cara|caranya)\b/.test(s)?"how":"why"};
-const NUDGE=["Jadi gimana, bisa?","Nah gitu. Jadi bisa nggak?","Gimana, mau bantu?","Jadi…?"];
-const analyzeOther=(kind,meta,n)=>{const say=[],sig=[];
- if(kind==="tanya"){sig.push("bertanya dulu");say.push(n>1?"Kamu bertanya lagi sebelum memutuskan. Mengumpulkan informasi dulu menandakan kamu menimbang, tidak otomatis mengiyakan.":"Kamu bertanya dulu sebelum menjawab. Ini tanda menimbang: kamu tidak otomatis mengiyakan. Keputusanmu belum dihitung.")}
- else{sig.push("belum memutuskan");say.push("Balasanmu belum menunjukkan keputusan, jadi belum dihitung. Menggantung jawaban kadang jadi cara menghindari menolak secara langsung.")}
- if(meta.first>6){sig.push("lama sebelum mengetik");say.push("Kamu butuh "+meta.first.toFixed(1)+" detik sebelum mulai mengetik.")}
- if(meta.del>=12){sig.push("banyak menghapus");say.push("Kamu menghapus "+meta.del+" karakter sebelum mengirim.")}
- return{stance:kind,conf:1,score:null,sig,text:say.join(" "),maaf:0}};
-const LQ=[
- ["Aku merasa bersalah lama setelah menolak permintaan orang.",0],
- ["Kebutuhanku sering kutunda demi orang lain, walau aku sedang capek.",0],
- ["Kalau orang lain kecewa padaku, aku ikut kepikiran seharian.",0],
- ["Aku lebih sering bilang \"iya\" duluan, baru mikir belakangan.",0],
- ["Aku merasa harus terus berguna supaya orang tetap suka padaku.",0],
- ["Aku bisa menolak tanpa perlu memberi alasan panjang.",1]
-];
 const $=id=>document.getElementById(id);
 const scr=$("scr");
-let S,i,lk,busy=false;
-const reset=()=>{S={ans:[],cave:0,press:0,log:[],qs:0};lk=Array(LQ.length).fill(0);i=0};
-const intro=()=>{reset();$("res").classList.remove("on");scr.innerHTML='<div class="start"><div class="av" style="margin:0 auto;width:64px;height:64px;font-size:26px">R</div><h2>Raka</h2><p>Teman sekelasmu. Akrab, sering minta tolong. Balas chat-nya dengan mengetik sendiri.</p><button class="btn" id="go">Mulai chat</button></div>';$("go").onclick=chat};
-const chat=()=>{scr.innerHTML='<div class="bar"><div class="av">R</div><div><b>Raka</b><small>online · <span id="aist">'+aiTxt+'</span></small></div><span class="prog" id="pg"></span></div><div class="chat" id="ch"></div><form class="inbar" id="fm"><textarea id="tx" rows="1" placeholder="Ketik balasanmu…" aria-label="Balasan untuk Raka" disabled></textarea><button class="send" id="sd" aria-label="Kirim" disabled>➤</button></form>';
- const tx=$("tx");let prev=0;
- tx.addEventListener("input",()=>{if(M.first<0)M.first=(performance.now()-M.t0)/1000;const L=tx.value.length;if(L<prev)M.del+=prev-L;prev=L;tx.style.height="auto";tx.style.height=Math.min(tx.scrollHeight,120)+"px";$("sd").disabled=tx.value.trim().length<1});
- tx.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();$("fm").requestSubmit()}});
- $("fm").addEventListener("submit",e=>{e.preventDefault();const v=tx.value.trim();if(!v||busy)return;tx.value="";prev=0;tx.style.height="auto";$("sd").disabled=true;lock(true);onSend&&onSend(v)});
- next()};
-let M={t0:0,first:-1,del:0},onSend=null;
-const lock=b=>{busy=b;$("tx").disabled=b;if(!b){$("tx").focus({preventScroll:true})}};
-const ask=fn=>{M={t0:performance.now(),first:-1,del:0};onSend=v=>{add(v,"me");fn(v,{...M,first:M.first<0?0:M.first})};lock(false)};
+let S,i;
+const reset=()=>{S={ans:[],cave:0,press:0,log:[],qs:0,un:0};i=0};
+const intro=()=>{reset();$("res").classList.remove("on");scr.innerHTML='<div class="start"><div class="av" style="margin:0 auto;width:64px;height:64px;font-size:26px">R</div><h2>Raka</h2><p>Teman sekelasmu. Akrab, sering minta tolong. Pilih jawaban yang paling mirip dengan yang biasanya kamu lakukan.</p><button class="btn" id="go">Mulai</button></div>';$("go").onclick=chat};
+const chat=()=>{scr.innerHTML='<div class="bar"><div class="av">R</div><div><b>Raka</b><small>online</small></div><span class="prog" id="pg"></span></div><div class="chat" id="ch"></div><div class="opts" id="op" role="group" aria-label="Pilihan jawaban"></div>';next()};
 const add=(txt,cls)=>{const ch=$("ch"),d=document.createElement("div");d.className="msg "+cls;d.textContent=txt;ch.appendChild(d);ch.scrollTop=ch.scrollHeight;return d};
-const aiStart=()=>{const ch=$("ch"),d=document.createElement("div");d.className="ai busy";d.innerHTML='<b>Analisis AI</b><span>Membaca maksud jawabanmu…</span>';ch.appendChild(d);ch.scrollTop=ch.scrollHeight;return{d,t:performance.now()}};
-const aiFill=(cd,a,cb)=>{const wait=Math.max(0,550-(performance.now()-cd.t));setTimeout(()=>{const d=cd.d,ch=$("ch");d.classList.remove("busy");d.classList.add("done");d.innerHTML='<b></b><span></span><div class="chips"></div>';d.querySelector("b").textContent="Analisis AI · "+LBL[a.stance]+(a.score==null?"":" ("+Math.round(a.conf*100)+"% yakin)");d.querySelector("span").textContent=a.text;d.querySelector(".chips").innerHTML=a.sig.map(()=>"<span></span>").join("");d.querySelectorAll(".chips span").forEach((x,k)=>x.textContent=a.sig[k]);ch.scrollTop=ch.scrollHeight;cb()},wait)};
-const typing=cb=>{const ch=$("ch"),d=document.createElement("div");d.className="typing";d.textContent="Raka sedang mengetik…";ch.appendChild(d);ch.scrollTop=ch.scrollHeight;setTimeout(()=>{d.remove();cb()},700+Math.random()*500)};
+const aiStart=()=>{const ch=$("ch"),d=document.createElement("div");d.className="ai busy";d.innerHTML='<b>Analisis AI</b><span>Menganalisis pilihanmu…</span>';ch.appendChild(d);ch.scrollTop=ch.scrollHeight;return{d,t:performance.now()}};
+const aiFill=(cd,a,cb)=>{const wait=Math.max(0,650-(performance.now()-cd.t));setTimeout(()=>{const d=cd.d,ch=$("ch");d.classList.remove("busy");d.classList.add("done");d.innerHTML='<b></b><span></span><div class="chips"></div>';d.querySelector("b").textContent="Analisis AI · "+LBL[a.stance];d.querySelector("span").textContent=a.text;d.querySelector(".chips").innerHTML=a.sig.map(()=>"<span></span>").join("");d.querySelectorAll(".chips span").forEach((x,k)=>x.textContent=a.sig[k]);ch.scrollTop=ch.scrollHeight;cb()},wait)};
+const typing=cb=>{const ch=$("ch"),d=document.createElement("div");d.className="typing";d.textContent="Raka sedang mengetik…";ch.appendChild(d);ch.scrollTop=ch.scrollHeight;setTimeout(()=>{d.remove();cb()},650+Math.random()*450)};
 const pick=a=>a[Math.floor(Math.random()*a.length)];
-const converse=(r,pressure,done)=>{let turns=0;const loop=()=>ask(async(v,m)=>{
- const cd=aiStart();const ep=await embProbs(v);
- const a0=analyze(v,r,{...m,pressure},ep);
- const kind=turns>=3?"putus":intentOf(v,a0,ep);
- if(kind==="putus"){S.log.push({lv:r.c,req:r.t,ans:v,a:a0,m,pressure});aiFill(cd,a0,()=>done(a0));return}
- turns++;if(kind==="tanya")S.qs++;
- const o=analyzeOther(kind,m,turns);S.log.push({lv:r.c,ans:v,a:o,m,pressure,other:true});
- aiFill(cd,o,()=>typing(()=>{
-  if(kind==="tanya"){add(r.qa[topic(v)]||r.qa.why,"them");setTimeout(()=>typing(()=>{add(turns>=3?"Udah ah, intinya bisa atau nggak?":pick(NUDGE),"them");loop()}),250)}
-  else{add(turns>=3?"Udah ah, intinya bisa atau nggak?":pick(["Maksudnya bisa atau nggak nih?","Hehe, jadi gimana? Bisa bantu?","Eh, jadi mau atau nggak?"]),"them");loop()}
- }));
-});loop()};
-const react=(a,pressure)=>{if(pressure)return a.stance==="terima"?pick(["Nah gitu dong, makasih ya","Makasih, kamu emang baik"]):pick(["Hmm, oke","Yaudah deh","Oh… oke"]);if(a.stance==="tolak"&&a.defl)return pick(["Hmm, yaudah aku coba tanya yang lain deh","Oke deh, aku cari orang lain"]);if(a.stance==="syarat"&&a.sig.includes("menawarkan alternatif"))return"Oh boleh juga gitu, oke makasih";return pick(REPLY[a.stance])};
+const shuffle=a=>{const b=[...a];for(let k=b.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[b[k],b[j]]=[b[j],b[k]]}return b};
+const choose=(opts,fn)=>{const op=$("op"),sh=shuffle(opts);op.innerHTML=sh.map((o,k)=>'<button class="opt" data-k="'+k+'"><span class="ol">'+"ABCD"[k]+'</span>'+esc(o[0])+'</button>').join('');const t0=performance.now();
+ op.querySelectorAll("button").forEach(b=>b.onclick=()=>{const o=sh[+b.dataset.k];op.innerHTML="";add(o[0],"me");fn(o,{first:(performance.now()-t0)/1000})});$("ch").scrollTop=$("ch").scrollHeight};
+const react=(a,pressure)=>{if(pressure)return a.stance==="tolak"?pick(["Hmm, oke","Yaudah deh","Oh… oke"]):pick(["Nah gitu dong, makasih ya","Makasih, kamu emang baik"]);if(a.stance==="tolak"&&a.defl)return pick(["Hmm, yaudah aku coba cara lain deh","Oke deh, aku cari orang lain"]);if(a.stance==="syarat"&&a.alt)return"Oh boleh juga gitu, oke makasih";return pick(REPLY[a.stance])};
 const next=()=>{
- if(i>=R.length){typing(()=>{add("Udah dulu ya, makasih udah bales chatku","them");setTimeout(survey,1200)});return}
- $("pg").textContent="Permintaan "+(i+1)+"/"+R.length;
+ if(i>=R.length){typing(()=>{add("Udah dulu ya, makasih udah bales chatku","them");setTimeout(result,1200)});return}
+ $("pg").textContent="Pertanyaan "+(i+1)+"/"+R.length;
  const r=R[i];
- typing(()=>{add(r.t,"them");converse(r,false,a=>{
-  if(r.p&&a.stance!=="terima"){S.press++;typing(()=>{add(r.p,"them");converse(r,true,b=>{
-   if(b.stance==="terima")S.cave++;S.ans.push({c:r.c,v:b.stance==="terima"?2:a.score});
-   typing(()=>{add(react(b,true),"them");i++;next()})})})}
-  else{S.ans.push({c:r.c,v:a.score});typing(()=>{add(react(a,false),"them");i++;next()})}
+ typing(()=>{add(r.t,"them");choose(r.o,(o,m)=>{
+  const a=analyzeChoice(o,r,m,false);S.log.push({lv:r.c,req:r.t,ans:o[0],a,m});if(a.un)S.un++;
+  aiFill(aiStart(),a,()=>{
+   if(r.p&&a.stance!=="terima"){S.press++;typing(()=>{add(r.p,"them");choose(PR,(o2,m2)=>{
+    const b=analyzeChoice(o2,r,m2,true);S.log.push({lv:r.c,req:r.p,ans:o2[0],a:b,m:m2,pressure:true});if(b.un)S.un++;
+    aiFill(aiStart(),b,()=>{if(b.stance!=="tolak")S.cave++;S.ans.push({c:r.c,v:Math.max(a.score,b.score)});typing(()=>{add(react(b,true),"them");i++;next()})})})})}
+   else{S.ans.push({c:r.c,v:a.score});typing(()=>{add(react(a,false),"them");i++;next()})}
+  });
  })});
 };
-const survey=()=>{
- scr.innerHTML='<div class="bar"><div class="av">?</div><div><b>Bagian 2</b><small>Seberapa sesuai dengan dirimu?</small></div></div><div class="likert">'+LQ.map((q,k)=>'<div class="q"><p>'+(k+1)+'. '+q[0]+'</p><div class="sc" data-q="'+k+'">'+[1,2,3,4,5].map(n=>'<button aria-pressed="false" data-n="'+n+'">'+n+'</button>').join('')+'</div><div class="scl"><span>Tidak sesuai</span><span>Sangat sesuai</span></div></div>').join('')+'<button class="btn" id="fin" disabled style="width:100%;opacity:.5">Lihat hasil</button></div>';
- scr.querySelectorAll(".sc").forEach(g=>g.querySelectorAll("button").forEach(b=>b.onclick=()=>{
-  const q=+g.dataset.q;lk[q]=+b.dataset.n;g.querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x===b));
-  const ok=lk.every(x=>x>0),f=$("fin");f.disabled=!ok;f.style.opacity=ok?1:.5}));
- $("fin").onclick=result;
-};
 const med=a=>{if(!a.length)return null;const s=[...a].sort((x,y)=>x-y),m=s.length>>1;return s.length%2?s[m]:(s[m-1]+s[m])/2};
-
 const esc=t=>String(t).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const lvl=v=>v<35?["Rendah","r"]:v<65?["Sedang","s"]:["Tinggi","t"];
 function showReport(d){
  const has=g=>S.log.some(l=>l.a.sig.includes(g));
  const kuat=[];if(S.qs)kuat.push("Kamu menimbang dulu sebelum memutuskan: bertanya "+S.qs+" kali sebelum menjawab.");if(S.press&&!S.cave)kuat.push("Kamu tetap pada keputusanmu meski dibuat merasa bersalah.");if(has("menawarkan alternatif"))kuat.push("Kamu bisa menolak dengan hangat dengan menawarkan jalan lain.");if(has("menetapkan batas nilai"))kuat.push("Kamu punya batas nilai yang jelas, misalnya soal kecurangan.");if(d.comp<35)kuat.push("Kamu berani menolak permintaan yang merugikanmu.");if(!kuat.length)kuat.push("Kamu tetap mau menolong untuk permintaan yang wajar, dan itu sisi baik yang perlu dijaga.");
- const latih=[];if(d.comp>=50)latih.push("Menolak permintaan yang jelas merugikanmu.");if(S.cave)latih.push("Bertahan saat orang lain membuatmu merasa bersalah.");if(d.maafTot>=5)latih.push("Mengurangi kata maaf saat menolak. Menolak bukan kesalahan.");if(has("alasan panjang"))latih.push("Menolak tanpa harus memberi alasan panjang.");if(has("menolak tidak langsung"))latih.push("Menolak secara langsung, bukan mengalihkan ke orang lain.");if(d.self>=60)latih.push("Memberi ruang untuk kebutuhan dan rasa capekmu sendiri.");if(!latih.length)latih.push("Pertahankan pola ini, dan perhatikan agar penolakanmu tetap hangat.");
+ const latih=[];if(d.comp>=50)latih.push("Menolak permintaan yang jelas merugikanmu.");if(S.cave)latih.push("Bertahan saat orang lain membuatmu merasa bersalah.");if(d.maafTot>=2)latih.push("Mengurangi kata maaf saat menolak. Menolak bukan kesalahan.");if(has("alasan panjang"))latih.push("Menolak tanpa harus memberi alasan panjang.");if(has("menolak tidak langsung"))latih.push("Menolak secara langsung, bukan mengalihkan ke orang lain.");if(d.self>=60)latih.push("Memberi ruang untuk kebutuhan dan rasa capekmu sendiri.");if(!latih.length)latih.push("Pertahankan pola ini, dan perhatikan agar penolakanmu tetap hangat.");
  const plan=d.total>=65?["Perhatikan setiap kali kamu bilang \"iya\" tapi sebenarnya ingin bilang \"nggak\". Catat saja, belum perlu diubah.","Tolak satu permintaan kecil dengan kalimat singkat: \"Maaf, kali ini aku nggak bisa.\"","Saat diminta tolong, jawab dulu \"aku cek dulu ya\", baru putuskan setelah 10 menit.","Ulangi penolakan kecil, kali ini tanpa alasan panjang.","Tulis 3 kebutuhanmu minggu ini yang sering kamu tunda demi orang lain.","Tawarkan alternatif sebagai ganti \"iya\" penuh, misalnya \"aku bantu bagian kecilnya aja\".","Tinjau lagi: penolakan mana yang ternyata tidak membuat hubunganmu rusak?"]
   :d.total>=35?["Catat momen ketika kamu merasa \"nggak enak\" menolak.","Saat dibuat merasa bersalah, tunda jawabanmu: \"aku pikir dulu ya\".","Tolak satu permintaan yang memang merugikanmu, tanpa minta maaf berulang.","Latih kalimat batas: \"Aku bisa bantu X, tapi nggak bisa Y.\"","Perhatikan siapa yang paling sering membuatmu mengalah.","Ulangi kalimat batas pada orang yang sama.","Tinjau lagi: kapan batasmu bertahan dan kapan bergeser?"]
   :["Pertahankan kebiasaan menimbang sebelum menjawab.","Saat menolak, sertakan satu kalimat hangat.","Tawarkan alternatif kecil kalau memang mau membantu.","Perhatikan apakah kamu terlalu cepat menolak permintaan yang wajar.","Bantu satu orang tanpa diminta, dengan batas yang kamu tentukan sendiri.","Refleksikan: kapan menolong membuatmu senang, bukan terbebani?","Tinjau lagi keseimbangan antara menolong dan menjaga diri."];
@@ -542,12 +449,12 @@ function showReport(d){
 const result=()=>{
  let num=0,den=0;S.ans.forEach(a=>{if(a.c>0){num+=a.c*a.v;den+=a.c*2}});
  const comp=Math.round(num/den*100);
- const self=Math.round(lk.reduce((s,v,k)=>s+((LQ[k][1]?6-v:v)-1),0)/(LQ.length*4)*100);
+ const self=Math.min(100,Math.round(S.un/5*100));
  const cave=S.press?Math.round(S.cave/S.press*100):0;
  const total=Math.round(.6*comp+.4*self);
  const firstNo=S.ans.findIndex(a=>a.v===0);
  const main=S.log.filter(l=>!l.pressure&&!l.other);
- const firstKey=med(main.map(l=>l.m.first)),dels=main.reduce((s,l)=>s+l.m.del,0);
+ const firstKey=med(main.map(l=>l.m.first));
  const allSig={};S.log.forEach(l=>l.a.sig.forEach(g=>allSig[g]=(allSig[g]||0)+1));
  const topSig=Object.entries(allSig).sort((a,b)=>b[1]-a[1]).slice(0,3);
  const maafTot=S.log.reduce((s,l)=>s+l.a.maaf,0);
@@ -559,29 +466,29 @@ const result=()=>{
  $("rScore").textContent=total;$("rType").textContent=type;$("rDesc").textContent=desc;
  requestAnimationFrame(()=>$("rBar").style.width=total+"%");
  const rows=[
-  ["Kepatuhan pada permintaan tidak wajar",comp+"%",comp,"Dihitung dari klasifikasi AI atas setiap balasan yang kamu ketik."],
+  ["Kepatuhan pada permintaan tidak wajar",comp+"%",comp,"Dihitung dari pilihanmu pada permintaan yang setengah wajar sampai tidak wajar."],
   ["Luluh saat dibuat merasa bersalah",S.press?(S.cave+" dari "+S.press):"tidak muncul",cave,"Raka memberi tekanan setelah kamu menolak atau memberi syarat."],
-  ["Kecenderungan mengabaikan diri (kuesioner)",self+"%",self,"Konstruk unmitigated communion: rasa bersalah, menunda kebutuhan sendiri, ikut terbebani."],
+  ["Kecenderungan mengabaikan diri",self+"%",self,"Konstruk unmitigated communion: berapa kali kamu memilih jawaban yang mengorbankan kebutuhanmu sendiri (dihitung sampai 5 kali)."],
   ["Penolakan pertama",firstNo<0?"tidak pernah":"permintaan ke-"+(firstNo+1),firstNo<0?100:Math.round(firstNo/(R.length-1)*100),"Makin belakang, makin jauh batasmu bisa didorong."],
-  ["Jeda sebelum mengetik",firstKey==null?"-":firstKey.toFixed(1)+" dtk",Math.min(100,Math.round((firstKey||0)/10*100)),"Median waktu sampai kamu mulai mengetik. Indikator eksploratif, tanpa norma baku."]
+  ["Jeda sebelum memilih",firstKey==null?"-":firstKey.toFixed(1)+" dtk",Math.min(100,Math.round((firstKey||0)/12*100)),"Median waktu sampai kamu memilih jawaban. Indikator eksploratif, tanpa norma baku."]
  ];
  $("rRows").innerHTML=rows.map(r=>'<div class="row"><div class="lab">'+r[0]+'<span>'+r[1]+'</span></div><div class="m"><i style="width:'+r[2]+'%"></i></div><p>'+r[3]+'</p></div>').join('');
  /* ringkasan AI keseluruhan */
  const P=[];
  const cmp=S.log.filter(l=>!l.pressure&&l.lv>=2&&l.a.stance==="terima").length;
- P.push("Dari "+main.length+" balasan, AI mengklasifikasikan "+main.filter(l=>l.a.stance==="terima").length+" menerima, "+main.filter(l=>l.a.stance==="syarat").length+" bersyarat, dan "+main.filter(l=>l.a.stance==="tolak").length+" menolak. Untuk permintaan yang jelas merugikan (tingkat 2–3), kamu menerima "+cmp+" kali.");
+ P.push("Dari "+main.length+" pertanyaan, kamu memilih "+main.filter(l=>l.a.stance==="terima").length+" menerima, "+main.filter(l=>l.a.stance==="syarat").length+" bersyarat, dan "+main.filter(l=>l.a.stance==="tolak").length+" menolak. Untuk permintaan yang jelas merugikan (tingkat 2–3), kamu menerima "+cmp+" kali.");
  P.push(firstNo<0?"Kamu tidak pernah menolak sepenuhnya. Pola ini sejalan dengan efek foot-in-the-door: setelah mengiyakan yang kecil, yang besar terasa makin sulit ditolak.":"Penolakan pertamamu muncul di permintaan ke-"+(firstNo+1)+(firstNo>=4?", cukup belakang. Batasmu baru muncul setelah beberapa kali mengiyakan, khas efek foot-in-the-door.":", cukup awal. Kamu tidak terlalu terseret oleh permintaan-permintaan kecil sebelumnya."));
  if(S.press)P.push(S.cave?"Saat Raka membuatmu merasa bersalah, kamu luluh "+S.cave+" dari "+S.press+" kali. Rasa bersalah adalah tuas utama yang menggeser batasmu.":"Saat Raka membuatmu merasa bersalah, kamu tetap pada keputusanmu. Ini tanda asertivitas yang kuat.");
  if(S.qs)P.push("Kamu bertanya "+S.qs+" kali sebelum memutuskan. Mencari informasi dulu membantu kamu menilai apakah permintaan itu wajar, bukan langsung mengiyakan.");
- if(topSig.length)P.push("Tanda yang paling sering muncul di kata-katamu: "+topSig.map(x=>x[0]+" ("+x[1]+"x)").join(", ")+"."+(maafTot>=5?" Total kamu menulis "+maafTot+" kata maaf. Coba perhatikan apakah maaf itu memang perlu.":""));
+ if(topSig.length)P.push("Tanda yang paling sering muncul dari pilihanmu: "+topSig.map(x=>x[0]+" ("+x[1]+"x)").join(", ")+"."+(maafTot>=2?" Kamu "+maafTot+" kali memilih jawaban dengan maaf berlebihan. Coba perhatikan apakah maaf itu memang perlu.":""));
  P.push(total>=65?"Saran latihan: tolak satu permintaan kecil per minggu dengan kalimat singkat tanpa alasan panjang, misalnya \"Maaf, kali ini aku nggak bisa.\" Pelatihan asertivitas adalah intervensi berbasis bukti.":total>=35?"Saran latihan: saat merasa dibuat bersalah, beri jeda dulu (\"aku pikir dulu ya\") sebelum menjawab. Keputusan yang diambil di bawah rasa bersalah jarang mencerminkan batasmu yang sebenarnya.":"Saran: pertahankan, dan jaga supaya penolakanmu tetap hangat. Menawarkan alternatif adalah cara bagus melakukannya.");
  $("rSum").innerHTML=P.map(()=>"<p></p>").join("");$("rSum").querySelectorAll("p").forEach((p,k)=>p.textContent=P[k]);
- scr.innerHTML='<div class="start"><h2>Selesai</h2><p>Hasil dan analisis AI ada di bawah.</p><button class="btn alt" id="see">Lihat hasil</button></div>';
+ scr.innerHTML='<div class="start"><h2>Selesai</h2><p>Laporan hasilmu sudah siap.</p><button class="btn alt" id="see">Lihat hasil</button></div>';
  $("see").onclick=()=>$("res").scrollIntoView({behavior:"smooth"});
  $("res").scrollIntoView({behavior:"smooth"});
  const RD={type,desc,total,comp,cave,self,push:firstNo<0?100:Math.round(firstNo/(R.length-1)*100),maafTot,P};$("reopen").onclick=()=>showReport(RD);
  setTimeout(()=>showReport({type,desc,total,comp,cave,self,push:firstNo<0?100:Math.round(firstNo/(R.length-1)*100),maafTot,P}),700);
- $("copy").onclick=async()=>{const txt="People-Pleaser Detector: skor "+total+"/100 ("+type+"). Kepatuhan pada permintaan tidak wajar "+comp+"%, kuesioner "+self+"%.";try{await navigator.clipboard.writeText(txt);$("copied").textContent="Hasil disalin."}catch(e){$("copied").textContent=txt}};
+ $("copy").onclick=async()=>{const txt="People-Pleaser Detector: skor "+total+"/100 ("+type+"). Kepatuhan pada permintaan tidak wajar "+comp+"%, mengabaikan diri "+self+"%.";try{await navigator.clipboard.writeText(txt);$("copied").textContent="Hasil disalin."}catch(e){$("copied").textContent=txt}};
 };
 $("again").onclick=()=>{intro();scr.scrollIntoView({behavior:"smooth"})};
 intro();
