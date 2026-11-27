@@ -94,47 +94,74 @@ table{border-collapse:collapse;width:100%}
 .sum{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px 18px;margin-top:18px}
 .sum p{margin:0 0 10px;font-size:15px}
 .start .btn{background:var(--pink);color:#2a0f1c}
-.wel{position:fixed;inset:0;z-index:50;background:#ff6f92;color:#2a0f1c;display:grid;place-items:center;padding:24px 16px;overflow:auto;transition:opacity .55s ease,transform .55s ease}
-.wel.out{opacity:0;transform:scale(1.04);pointer-events:none}
-.wel-in{max-width:520px;width:100%;display:grid;gap:12px;text-align:center}
-.wt{font-size:clamp(34px,7vw,52px);line-height:1.05;letter-spacing:-.02em;margin:0;text-wrap:balance;opacity:0;animation:wpop .6s .1s forwards}
+.wel{position:fixed;inset:0;z-index:50;background:radial-gradient(120% 90% at 70% 20%,#ff8fab 0%,#ff6f92 45%,#e94d78 100%);color:#2a0f1c;display:grid;place-items:center;padding:24px 16px;overflow:auto;perspective:1200px;transition:opacity .6s ease,transform .6s ease}
+.wel.out{opacity:0;transform:scale(1.06);pointer-events:none}
+.wel-in{position:relative;z-index:2;max-width:1040px;width:100%;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,400px);gap:clamp(20px,4vw,56px);align-items:center}
+.wtext{translate:calc(var(--px,0)*-10px) calc(var(--py,0)*-8px);transition:translate .3s ease-out;display:grid;gap:14px;justify-items:start}
+.wt{font-size:clamp(36px,6vw,60px);line-height:1.02;letter-spacing:-.025em;margin:0;text-wrap:balance;opacity:0;animation:wpop .7s .1s forwards;text-shadow:0 2px 0 #ffb3c6,0 4px 0 #e94d78,0 6px 0 #c93b64,0 10px 18px rgba(42,15,28,.25)}
 .wsub{margin:0;font-weight:600;opacity:0;animation:wpop .6s .35s forwards}
-.bub{display:flex;flex-direction:column;gap:8px;margin:14px 0 6px;text-align:left}
-.wb{align-self:flex-start;max-width:85%;background:#fff;color:#1d1530;padding:9px 14px;border-radius:18px 18px 18px 6px;font-weight:600;font-size:var(--s,15px);box-shadow:0 4px 0 rgba(42,15,28,.18);opacity:0;transform:translateY(12px) scale(.94);animation:wpop .45s var(--d) forwards}
-.wb.me{align-self:flex-end;background:#4b2a8a;color:#fff;border-radius:18px 18px 6px 18px}
-.wb.dots{animation:wpop .45s var(--d) forwards,blink 1.1s calc(var(--d) + .5s) infinite}
-@keyframes wpop{to{opacity:1;transform:none}}
-@keyframes blink{50%{opacity:.35}}
-.wgo{justify-self:center;min-width:200px;opacity:0;animation:wpop .6s .6s forwards}
+.wgo{min-width:200px;opacity:0;animation:wpop .6s .6s forwards;box-shadow:0 6px 0 #12060c,0 14px 24px rgba(42,15,28,.35);transition:transform .15s,box-shadow .15s}
+.wgo:active{transform:translateY(4px);box-shadow:0 2px 0 #12060c,0 6px 12px rgba(42,15,28,.3)}
 .wnote{margin:0;font-size:14px;opacity:0;animation:wpop .6s .8s forwards}
+.stage{transform-style:preserve-3d;transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .25s ease-out}
+.sway{transform-style:preserve-3d;animation:sway 9s ease-in-out infinite}
+@keyframes sway{0%,100%{transform:rotateY(-16deg) rotateX(7deg)}50%{transform:rotateY(-6deg) rotateX(3deg) translateY(-8px)}}
+.ph3d{position:relative;transform-style:preserve-3d;background:#1d1530;border-radius:36px;padding:14px;opacity:0;animation:phin .9s .2s cubic-bezier(.2,.9,.3,1.2) forwards}
+@keyframes phin{from{opacity:0;transform:translateZ(-200px) rotateY(40deg)}to{opacity:1;transform:none}}
+.ph3d::before{content:"";position:absolute;inset:0;border-radius:36px;background:#0d0814;transform:translateZ(-18px);box-shadow:0 30px 50px rgba(42,15,28,.45)}
+.ph3d::after{content:"";position:absolute;inset:0;border-radius:36px;background:linear-gradient(115deg,rgba(255,255,255,.16),rgba(255,255,255,0) 40%);pointer-events:none;transform:translateZ(1px)}
+.scr3d{position:relative;transform-style:preserve-3d;background:#f4f0f8;border-radius:24px;padding:16px 12px;display:flex;flex-direction:column;gap:8px;min-height:330px}
+.scr3d .top3d{display:flex;align-items:center;gap:8px;font-weight:800;font-size:14px;color:#1d1530;padding-bottom:6px;border-bottom:1px solid #e6e0ef}
+.scr3d .top3d i{width:28px;height:28px;border-radius:50%;background:#b89cff;color:#1d1530;display:grid;place-items:center;font-style:normal}
+.wb{align-self:flex-start;max-width:88%;background:#fff;color:#1d1530;padding:8px 13px;border-radius:16px 16px 16px 5px;font-weight:600;font-size:var(--s,14px);box-shadow:0 2px 0 #e6e0ef,0 8px 14px rgba(29,21,48,.18);opacity:0;animation:bpop .5s var(--d) cubic-bezier(.2,.9,.3,1.3) forwards}
+.wb.me{align-self:flex-end;background:#4b2a8a;color:#fff;border-radius:16px 16px 5px 16px;box-shadow:0 2px 0 #2e1857,0 8px 14px rgba(29,21,48,.25)}
+.wb.dots{animation:bpop .5s var(--d) forwards,blink 1.1s calc(var(--d) + .5s) infinite}
+@keyframes bpop{from{opacity:0;transform:translateZ(0) translateY(14px) scale(.85)}to{opacity:1;transform:translateZ(var(--z,30px))}}
+@keyframes wpop{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes blink{50%{opacity:.35}}
+.fl{translate:calc(var(--px,0)*var(--k,20px)) calc(var(--py,0)*var(--k,20px));transition:translate .3s ease-out;position:absolute;z-index:1;pointer-events:none;transform-style:preserve-3d;animation:flo var(--t,12s) ease-in-out infinite;animation-delay:var(--dl,0s)}
+.fl span{display:block;padding:10px 18px;border-radius:20px 20px 20px 6px;background:#fff;color:#1d1530;font-weight:800;font-size:var(--fs,18px);opacity:.92;box-shadow:1px 1px 0 #f0e6ee,2px 2px 0 #e4d6e2,3px 3px 0 #d8c6d6,4px 4px 0 #ccb6ca,5px 5px 0 #c0a6be,6px 6px 0 #b496b2,10px 16px 24px rgba(42,15,28,.3)}
+.fl.v span{background:#4b2a8a;color:#fff;border-radius:20px 20px 6px 20px;box-shadow:1px 1px 0 #43257c,2px 2px 0 #3b206e,3px 3px 0 #331c60,4px 4px 0 #2b1752,5px 5px 0 #231344,6px 6px 0 #1b0e36,10px 16px 24px rgba(42,15,28,.3)}
+@keyframes flo{0%,100%{transform:translate3d(0,0,var(--z,-100px)) rotateY(var(--r0,-20deg)) rotateZ(-4deg)}50%{transform:translate3d(0,-26px,var(--z,-100px)) rotateY(var(--r1,20deg)) rotateZ(4deg)}}
 body.lock{overflow:hidden}
-@media(prefers-reduced-motion:reduce){.wt,.wsub,.wb,.wgo,.wnote{animation:none;opacity:1;transform:none}.wel{transition:none}}
+@media(prefers-reduced-motion:reduce){.wt,.wsub,.wb,.wgo,.wnote,.ph3d,.sway,.fl{animation:none;opacity:1}.wb{transform:translateZ(var(--z,30px))}.wel,.stage{transition:none}}
+@media(max-width:760px){.wel-in{grid-template-columns:minmax(0,1fr);gap:18px}.wtext{justify-items:center;text-align:center}.wtext .wgo,.wtext .wnote{display:none}.wfoot{display:grid!important}.scr3d{min-height:0}.wb{font-size:calc(var(--s,14px) - 1px)}.fl.hide-m{display:none}}
+.wfoot{display:none;gap:8px;justify-items:center;text-align:center}
 @media(max-width:860px){.wrap{grid-template-columns:minmax(0,1fr)}.phone{max-width:440px;width:100%;margin:0 auto}.grid2{grid-template-columns:minmax(0,1fr)}}
 @media(max-width:600px){.screen{height:min(600px,76svh)}.map thead{display:none}.map tr{display:grid;padding:8px 0;border-bottom:1px solid var(--line)}.map td{border:0;padding:2px 0}}
 </style>
 </head>
 <body class="lock">
 <div class="wel" id="welcome" role="dialog" aria-modal="true" aria-labelledby="wTitle">
+ <div class="fl" style="top:8%;left:6%;--z:-160px;--t:11s;--k:-34px"><span>Iya boleh</span></div>
+ <div class="fl v hide-m" style="top:70%;left:4%;--z:-80px;--t:13s;--dl:-4s;--fs:16px;--k:-60px"><span>Oke deh…</span></div>
+ <div class="fl hide-m" style="top:12%;right:8%;--z:-220px;--t:14s;--dl:-2s;--fs:22px;--k:-22px"><span>Tolong dong</span></div>
+ <div class="fl v" style="bottom:6%;right:6%;--z:-120px;--t:12s;--dl:-7s;--k:-48px"><span>Nggak bisa</span></div>
+ <div class="fl hide-m" style="top:44%;left:40%;--z:-320px;--t:16s;--dl:-9s;--fs:15px;--k:-12px"><span>Bentar ya</span></div>
  <div class="wel-in">
-  <h1 class="wt" id="wTitle">Seberapa sering kamu bilang "iya"?</h1>
-  <p class="wsub">People-Pleaser Detector · tes berbasis jurnal psikologi</p>
-  <div class="bub" aria-hidden="true">
-   <div class="wb" style="--d:.9s">Eh, boleh pinjam pulpen?</div>
-   <div class="wb me" style="--d:1.5s">Iya boleh</div>
-   <div class="wb" style="--d:2.1s;--s:16px">Titip absen dong nanti</div>
-   <div class="wb me" style="--d:2.7s">Hmm… oke deh</div>
-   <div class="wb" style="--d:3.3s;--s:18px">Kerjain bagianku juga ya?</div>
-   <div class="wb" style="--d:3.9s;--s:20px">Pinjam akun ujianmu dong!</div>
-   <div class="wb me dots" style="--d:4.5s">…</div>
+  <div class="wtext">
+   <h1 class="wt" id="wTitle">Seberapa sering kamu bilang "iya"?</h1>
+   <p class="wsub">People-Pleaser Detector · tes berbasis jurnal psikologi</p>
+   <button class="btn wgo" data-go>Mulai tes</button>
+   <p class="wnote">Sekitar 4 menit · tidak ada data yang disimpan</p>
   </div>
-  <button class="btn wgo" id="wgo">Mulai tes</button>
-  <p class="wnote">Sekitar 4 menit · tidak ada data yang disimpan</p>
+  <div class="stage" id="stage" aria-hidden="true"><div class="sway"><div class="ph3d"><div class="scr3d">
+   <div class="top3d"><i>R</i>Raka</div>
+   <div class="wb" style="--d:.9s;--z:20px">Eh, boleh pinjam pulpen?</div>
+   <div class="wb me" style="--d:1.5s;--z:28px">Iya boleh</div>
+   <div class="wb" style="--d:2.1s;--z:36px;--s:15px">Titip absen dong nanti</div>
+   <div class="wb me" style="--d:2.7s;--z:44px">Hmm… oke deh</div>
+   <div class="wb" style="--d:3.3s;--z:56px;--s:17px">Kerjain bagianku juga ya?</div>
+   <div class="wb" style="--d:3.9s;--z:72px;--s:19px">Pinjam akun ujianmu dong!</div>
+   <div class="wb me dots" style="--d:4.5s;--z:60px">…</div>
+  </div></div></div></div>
+  <div class="wfoot"><button class="btn wgo" data-go>Mulai tes</button><p class="wnote">Sekitar 4 menit · tidak ada data yang disimpan</p></div>
  </div>
 </div>
 <section class="band top">
  <div class="wrap">
   <div>
-   <h1>People-Pleaser Detector</h1>
+   <h1 data-par="0.18">People-Pleaser Detector</h1>
    <p class="lead">Temanmu, Raka, akan chat minta tolong. Awalnya sepele, makin lama makin keterlaluan. Ketik balasanmu sendiri, persis seperti kamu biasa membalas. Kamu juga boleh bertanya balik ("kenapa?", "kapan?", "berapa?"), Raka akan menjawab. Setiap balasanmu langsung dianalisis AI: menerima, memberi syarat, menolak, atau masih bertanya, plus tanda-tanda dari kata-katamu.</p>
    <ol class="steps">
     <li><b>1</b><span>Simulasi chat: 10 permintaan bertingkat (pola <em>foot-in-the-door</em>), dijawab dengan mengetik bebas.</span></li>
@@ -143,7 +170,7 @@ body.lock{overflow:hidden}
    </ol>
    <p class="note">Sekitar 4 menit. Tidak ada data yang dikirim atau disimpan, semuanya dihitung di perangkatmu.</p>
   </div>
-  <div class="phone"><div class="screen" id="scr"></div></div>
+  <div class="phone" data-par="-0.06"><div class="screen" id="scr"></div></div>
  </div>
 </section>
 
@@ -373,9 +400,13 @@ $("again").onclick=()=>{intro();scr.scrollIntoView({behavior:"smooth"})};
 intro();
 const W=$("welcome");
 const closeW=()=>{if(W.classList.contains("out"))return;W.classList.add("out");document.body.classList.remove("lock");setTimeout(()=>{W.remove();const g=$("go");g&&g.focus({preventScroll:true})},560)};
-$("wgo").onclick=closeW;
+document.querySelectorAll("[data-go]").forEach(b=>b.onclick=closeW);
+const stg=$("stage"),rm=matchMedia("(prefers-reduced-motion: reduce)").matches;
+if(!rm){W.addEventListener("pointermove",e=>{const x=e.clientX/innerWidth-.5,y=e.clientY/innerHeight-.5;stg.style.setProperty("--ry",(x*24).toFixed(1)+"deg");stg.style.setProperty("--rx",(-y*18).toFixed(1)+"deg");W.style.setProperty("--px",x.toFixed(3));W.style.setProperty("--py",y.toFixed(3))});
+ const pars=[...document.querySelectorAll("[data-par]")];let tk=false;
+ addEventListener("scroll",()=>{if(tk)return;tk=true;requestAnimationFrame(()=>{const y=scrollY;pars.forEach(el=>{el.style.translate="0 "+(y*+el.dataset.par).toFixed(1)+"px"});tk=false})},{passive:true});}
 W.addEventListener("keydown",e=>{if(e.key==="Escape")closeW()});
-$("wgo").focus({preventScroll:true});
+const vis=[...document.querySelectorAll("[data-go]")].find(b=>b.offsetParent);vis&&vis.focus({preventScroll:true});
 }
 </script>
 </body>
