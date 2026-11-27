@@ -19,7 +19,7 @@
 html,body{margin:0}
 body{background:var(--bg);color:var(--ink);font:16px/1.55 "Plus Jakarta Sans",system-ui,sans-serif;overflow-x:clip}
 .band{padding:clamp(24px,4vw,56px) max(5vw,16px)}
-.top{background:radial-gradient(90% 120% at 80% 0%,#2a2418 0%,#0b0a08 65%);color:var(--ink);border-bottom:1px solid var(--line)}
+.top{background:radial-gradient(90% 120% at 80% 0%,rgba(42,36,24,.8) 0%,rgba(11,10,8,.35) 65%);color:var(--ink);border-bottom:1px solid var(--line)}
 .top h1{color:var(--gold2)}
 .wrap{max-width:1160px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,420px);gap:clamp(24px,4vw,56px);align-items:start}
 h1{font-family:"Playfair Display",Georgia,serif;font-size:clamp(34px,5vw,52px);line-height:1.05;letter-spacing:-.02em;margin:0 0 14px;text-wrap:balance}
@@ -124,14 +124,15 @@ table{border-collapse:collapse;width:100%}
 .fl span{display:block;padding:10px 18px;border-radius:20px 20px 20px 6px;background:#1f1b14;color:var(--ink);font-weight:800;font-size:var(--fs,18px);opacity:.9;box-shadow:1px 1px 0 #17140e,2px 2px 0 #13100b,3px 3px 0 #0f0d09,4px 4px 0 #0b0a07,5px 5px 0 #080705,6px 6px 0 #050403,10px 18px 28px rgba(0,0,0,.7)}
 .fl.v span{background:linear-gradient(180deg,#f0d27a,#c9a227);color:#0b0a08;border-radius:20px 20px 6px 20px;box-shadow:1px 1px 0 #b38f20,2px 2px 0 #9a7a1a,3px 3px 0 #806414,4px 4px 0 #66500f,5px 5px 0 #4d3c0b,6px 6px 0 #332807,10px 18px 28px rgba(0,0,0,.7),0 0 24px rgba(212,175,55,.25)}
 @keyframes flo{0%,100%{transform:translate3d(0,0,var(--z,-100px)) rotateY(var(--r0,-20deg)) rotateZ(-4deg)}50%{transform:translate3d(0,-26px,var(--z,-100px)) rotateY(var(--r1,20deg)) rotateZ(4deg)}}
-.pin{position:relative;height:320vh;border-top:1px solid var(--line);background:linear-gradient(180deg,#0b0a08,#110f0b 50%,#0b0a08)}
+.pin{position:relative;height:240vh;border-top:1px solid var(--line);background:transparent}
 .pin-st{position:sticky;top:0;height:100svh;overflow:hidden;display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(20px,4vw,56px);align-items:center;max-width:1160px;margin:0 auto;padding:24px max(5vw,16px);perspective:1400px}
 .pin-l h2{font-size:clamp(30px,4.4vw,46px);line-height:1.05;color:var(--gold2);margin:0 0 14px;text-wrap:balance}
 .pin-l p{color:var(--mut);margin:0 0 20px;max-width:40ch}
 .pbar{height:4px;background:var(--line);border-radius:9px;overflow:hidden;margin-bottom:16px;max-width:360px}
 .pbar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--goldD),var(--gold2))}
 .pnav{list-style:none;padding:0;margin:0;display:grid;gap:8px}
-.pnav li{color:var(--mut);font-weight:600;transition:color .3s,transform .3s}
+.pnav li{color:var(--mut);font-weight:600;transition:color .3s,transform .3s;cursor:pointer;min-height:32px;display:flex;align-items:center}
+.pnav li:hover{color:var(--ink)}
 .pnav li.on{color:var(--gold2);transform:translateX(8px)}
 .pcards{position:relative;height:min(440px,62svh);transform-style:preserve-3d}
 .pcard{position:absolute;inset:0;background:linear-gradient(160deg,#1d1912,#0f0d0a);border:1px solid #3a3222;border-radius:24px;padding:clamp(20px,3vw,34px);display:flex;flex-direction:column;gap:12px;opacity:0;transform:rotateY(-28deg) translateZ(-160px) translateX(40px);transition:opacity .6s ease,transform .7s cubic-bezier(.2,.8,.2,1);box-shadow:0 30px 60px rgba(0,0,0,.6),0 0 40px rgba(212,175,55,.08)}
@@ -142,8 +143,57 @@ table{border-collapse:collapse;width:100%}
 .pcard .cite{color:var(--mut);font-size:14px;margin:0}
 .pcard p{margin:0;font-size:16px}
 .pcard .use{margin-top:auto;border-top:1px solid #3a3222;padding-top:12px;font-size:14px;color:var(--gold2)}
-@media(max-width:760px){.pin-st{grid-template-columns:minmax(0,1fr);align-content:center;gap:16px}.pin-l p,.pnav{display:none}.pcards{height:min(400px,58svh)}}
+.pdots{display:none}
+@media(max-width:760px){
+ .pin{height:auto}
+ .pin-st{position:relative;height:auto;grid-template-columns:minmax(0,1fr);gap:14px;padding:48px 0 40px;perspective:none;overflow:visible}
+ .pin-l{padding:0 16px}.pin-l p{display:block;margin-bottom:0}.pnav,.pbar{display:none}
+ .pcards{height:auto;display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding:6px 16px 10px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+ .pcards::-webkit-scrollbar{display:none}
+ .pcard,.pcard.on,.pcard.past{position:relative;inset:auto;flex:0 0 86%;scroll-snap-align:center;opacity:1;transform:none;min-height:340px}
+ .pdots{display:flex;justify-content:center;gap:10px}
+ .pdots button{width:44px;height:28px;border:0;background:transparent;padding:0;display:grid;place-items:center}
+ .pdots button::before{content:"";width:10px;height:10px;border-radius:50%;background:#3a3222;transition:width .3s,background .3s}
+ .pdots button[aria-current=true]::before{width:26px;border-radius:9px;background:var(--gold);box-shadow:0 0 10px rgba(240,210,122,.7)}
+}
 @media(prefers-reduced-motion:reduce){.pcard,.pnav li{transition:none}}
+.bgw{position:fixed;inset:0;z-index:0;pointer-events:none;perspective:900px;overflow:hidden}
+.bgw b{position:absolute;font-family:"Playfair Display",Georgia,serif;font-weight:800;font-size:var(--fs);white-space:nowrap;color:#d4af37;opacity:var(--o,.16);text-shadow:1px 1px 0 #b38f20,2px 2px 0 #9a7a1a,3px 3px 0 #806414,4px 4px 0 #66500f,5px 5px 0 #4d3c0b,6px 6px 0 #332807,12px 18px 26px rgba(0,0,0,.65);translate:calc(var(--px,0)*var(--k)) calc(var(--sy,0px)*var(--sk));transition:translate .35s ease-out;animation:bgf var(--t) ease-in-out infinite;animation-delay:var(--dl)}
+@keyframes bgf{0%,100%{transform:translateZ(var(--z)) rotateY(-28deg) rotateX(10deg)}50%{transform:translateZ(var(--z)) rotateY(28deg) rotateX(-10deg) translateY(-34px)}}
+section{position:relative;z-index:1}
+@media(prefers-reduced-motion:reduce){.bgw b{animation:none;transition:none}}
+/* ===== Glow & animasi ===== */
+#dust{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+.spot{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(420px circle at var(--mx,50%) var(--my,30%),rgba(240,210,122,.13),transparent 60%);transition:background .1s}
+.shine{background:linear-gradient(100deg,#b8912a 0%,#f0d27a 30%,#fff6d6 45%,#f0d27a 60%,#b8912a 100%);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent!important;animation:shine 5s linear infinite;filter:drop-shadow(0 0 18px rgba(240,210,122,.25))}
+@keyframes shine{from{background-position:120% 0}to{background-position:-130% 0}}
+.wt{animation:wpop .7s .1s forwards,glow 3.2s 1s ease-in-out infinite}
+@keyframes glow{0%,100%{filter:drop-shadow(0 0 6px rgba(240,210,122,.25))}50%{filter:drop-shadow(0 0 26px rgba(240,210,122,.6))}}
+.btn{position:relative;overflow:hidden;box-shadow:0 0 0 rgba(212,175,55,0);animation:pulse 2.6s ease-in-out infinite}
+.btn::after{content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);transform:skewX(-20deg);animation:sweep 3.6s ease-in-out infinite}
+.wgo{animation:wpop .6s .6s forwards,pulse 2.6s 1.4s ease-in-out infinite}
+.btn.ghost{animation:none}.btn.ghost::after{display:none}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(212,175,55,.45),0 8px 24px rgba(0,0,0,.5)}50%{box-shadow:0 0 0 10px rgba(212,175,55,0),0 8px 34px rgba(212,175,55,.35)}}
+@keyframes sweep{0%,55%{left:-60%}100%{left:130%}}
+.phone{position:relative;isolation:isolate}
+.phone::before{content:"";position:absolute;inset:-2px;border-radius:40px;padding:2px;background:conic-gradient(from var(--ang,0deg),transparent 0 60%,#f0d27a 75%,#fff6d6 80%,#d4af37 85%,transparent 100%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:spin 5s linear infinite;z-index:-1;filter:drop-shadow(0 0 10px rgba(240,210,122,.6))}
+@property --ang{syntax:"<angle>";inherits:false;initial-value:0deg}
+@keyframes spin{to{--ang:360deg}}
+.me{box-shadow:0 0 16px rgba(212,175,55,.35)}
+.ai{transition:box-shadow .4s,border-color .4s}
+.ai.busy{border-color:#d4af37;animation:aiglow 1.1s ease-in-out infinite}
+@keyframes aiglow{0%,100%{box-shadow:0 0 0 rgba(212,175,55,0)}50%{box-shadow:0 0 22px rgba(212,175,55,.45)}}
+.ai.done{box-shadow:0 0 18px rgba(212,175,55,.18)}
+.box,.pcard,.q,.sum{transition:transform .35s ease,box-shadow .35s ease,border-color .35s}
+.box:hover,.sum:hover{transform:translateY(-4px);border-color:#5a4a1f;box-shadow:0 18px 40px rgba(0,0,0,.5),0 0 30px rgba(212,175,55,.15)}
+.rv{opacity:0;transform:translateY(34px) scale(.98);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.8,.2,1)}
+.rv.in{opacity:1;transform:none}
+.meter i{box-shadow:0 0 16px rgba(240,210,122,.7)}
+.row .m i{background:linear-gradient(90deg,#8a6a1c,#f0d27a);box-shadow:0 0 10px rgba(240,210,122,.5)}
+.pbar i{box-shadow:0 0 12px rgba(240,210,122,.8)}
+.steps b{box-shadow:0 0 12px rgba(212,175,55,.5)}
+.av{box-shadow:0 0 14px rgba(212,175,55,.5)}
+@media(prefers-reduced-motion:reduce){.wgo{opacity:1}.shine,.wt,.btn,.btn::after,.phone::before,.ai.busy{animation:none}.rv{opacity:1;transform:none;transition:none}#dust,.spot{display:none}}
 body.lock{overflow:hidden}
 @media(prefers-reduced-motion:reduce){.wt,.wsub,.wb,.wgo,.wnote,.ph3d,.sway,.fl{animation:none;opacity:1}.wb{transform:translateZ(var(--z,30px))}.wel,.stage{transition:none}}
 @media(max-width:760px){.wel-in{grid-template-columns:minmax(0,1fr);gap:18px}.wtext{justify-items:center;text-align:center}.wtext .wgo,.wtext .wnote{display:none}.wfoot{display:grid!important}.scr3d{min-height:0}.wb{font-size:calc(var(--s,14px) - 1px)}.fl.hide-m{display:none}}
@@ -179,10 +229,11 @@ body.lock{overflow:hidden}
   <div class="wfoot"><button class="btn wgo" data-go>Mulai tes</button><p class="wnote">Sekitar 4 menit · tidak ada data yang disimpan</p></div>
  </div>
 </div>
+<canvas id="dust" aria-hidden="true"></canvas><div class="spot" aria-hidden="true"></div><div class="bgw" id="bgw" aria-hidden="true"></div>
 <section class="band top">
  <div class="wrap">
   <div>
-   <h1 data-par="0.18">People-Pleaser Detector</h1>
+   <h1 data-par="0.18" class="shine">People-Pleaser Detector</h1>
    <p class="lead">Temanmu, Raka, akan chat minta tolong. Awalnya sepele, makin lama makin keterlaluan. Ketik balasanmu sendiri, persis seperti kamu biasa membalas. Kamu juga boleh bertanya balik ("kenapa?", "kapan?", "berapa?"), Raka akan menjawab. Setiap balasanmu langsung dianalisis AI: menerima, memberi syarat, menolak, atau masih bertanya, plus tanda-tanda dari kata-katamu.</p>
    <ol class="steps">
     <li><b>1</b><span>Simulasi chat: 10 permintaan bertingkat (pola <em>foot-in-the-door</em>), dijawab dengan mengetik bebas.</span></li>
@@ -198,8 +249,8 @@ body.lock{overflow:hidden}
 <section class="pin" id="pin">
  <div class="pin-st">
   <div class="pin-l">
-   <h2>Tiga teori di balik tes ini</h2>
-   <p>Scroll pelan-pelan. Setiap bagian tes diturunkan dari temuan jurnal psikologi.</p>
+   <h2 class="shine">Tiga teori di balik tes ini</h2>
+   <p>Setiap bagian tes diturunkan dari temuan jurnal psikologi. Klik nama teorinya atau scroll; di HP, geser kartunya ke samping.</p>
    <div class="pbar"><i id="pbar"></i></div>
    <ol class="pnav" id="pnav"><li class="on">Unmitigated communion</li><li>Foot-in-the-door</li><li>Asertivitas</li></ol>
   </div>
@@ -208,6 +259,7 @@ body.lock{overflow:hidden}
    <article class="pcard"><span class="lbl">Dasar 2 dari 3</span><h3>Foot-in-the-door</h3><p class="cite">Freedman &amp; Fraser (1966), Journal of Personality and Social Psychology</p><p>Orang yang sudah menuruti permintaan kecil lebih mungkin menuruti permintaan yang lebih besar setelahnya.</p><p class="use">Dipakai di: 10 permintaan Raka yang makin lama makin keterlaluan.</p></article>
    <article class="pcard"><span class="lbl">Dasar 3 dari 3</span><h3>Asertivitas</h3><p class="cite">Speed, Goldstein &amp; Goldfried (2018), Clinical Psychology: Science and Practice</p><p>Kemampuan menyatakan keinginan dan menolak secara langsung. Pelatihan asertivitas termasuk intervensi berbasis bukti.</p><p class="use">Dipakai di: analisis AI pada setiap balasanmu, termasuk saat kamu dibuat merasa bersalah.</p></article>
   </div>
+  <div class="pdots" id="pdots" aria-label="Pilih kartu"><button aria-label="Kartu 1" aria-current="true"></button><button aria-label="Kartu 2"></button><button aria-label="Kartu 3"></button></div>
  </div>
 </section>
 
@@ -215,24 +267,24 @@ body.lock{overflow:hidden}
  <div class="grid2">
   <div>
    <h2>Hasilmu</h2>
-   <div class="big" id="rScore">0</div>
+   <div class="big shine" id="rScore">0</div>
    <div class="meter"><i id="rBar" style="width:0"></i></div>
    <p><span class="tag" id="rType"></span></p>
    <p id="rDesc"></p>
    <div class="acts"><button class="btn" id="copy">Salin hasil</button><button class="btn ghost" id="again">Ulangi tes</button></div>
    <p class="note" id="copied" aria-live="polite"></p>
-   <div class="sum"><h2>Analisis AI keseluruhan</h2><div id="rSum"></div></div>
+   <div class="sum rv"><h2>Analisis AI keseluruhan</h2><div id="rSum"></div></div>
   </div>
   <div>
    <div class="rows" id="rRows"></div>
-   <div class="warn">Ini alat eksplorasi diri, belum divalidasi secara psikometrik dan <b>bukan diagnosis</b>. Kalau kebiasaan mengalah sudah bikin kamu tertekan, cemas, atau kelelahan, ngobrol dengan psikolog (misalnya layanan konseling kampus) bisa sangat membantu.</div>
+   <div class="warn rv">Ini alat eksplorasi diri, belum divalidasi secara psikometrik dan <b>bukan diagnosis</b>. Kalau kebiasaan mengalah sudah bikin kamu tertekan, cemas, atau kelelahan, ngobrol dengan psikolog (misalnya layanan konseling kampus) bisa sangat membantu.</div>
   </div>
  </div>
 </section>
 
 <section class="band">
  <div class="grid2">
-  <div class="box">
+  <div class="box rv">
    <h2>Dasar psikologinya</h2>
    <p><b>Unmitigated communion (UC).</b> Helgeson &amp; Fritz mendefinisikan UC sebagai fokus pada orang lain sampai mengabaikan diri sendiri: terlalu terlibat dalam urusan orang dan menelantarkan kebutuhan pribadi. UC berkaitan dengan distres psikologis. Bagian kuesioner tes ini mengukur dua ciri itu: <i>self-neglect</i> dan <i>overinvolvement</i>.</p>
    <p><b>Foot-in-the-door.</b> Freedman &amp; Fraser (1966) menunjukkan bahwa orang yang sudah menuruti permintaan kecil lebih mungkin menuruti permintaan yang lebih besar. Simulasi chat ini memakai urutan bertingkat yang sama, jadi yang diukur adalah <i>di titik mana</i> kamu berhenti.</p>
@@ -245,7 +297,7 @@ body.lock{overflow:hidden}
     <tr><td>Analisis AI tiap jawaban</td><td>Klasifikasi teks + deteksi tanda asertif / tidak asertif</td></tr>
    </tbody></table></div>
   </div>
-  <div class="box">
+  <div class="box rv">
    <h2>Referensi jurnal</h2>
    <ol class="refs">
     <li>Helgeson, V. S., &amp; Fritz, H. L. (1998). A theory of unmitigated communion. <em>Personality and Social Psychology Review, 2</em>(3), 173–183.</li>
@@ -254,7 +306,7 @@ body.lock{overflow:hidden}
     <li>Burger, J. M. (1999). The foot-in-the-door compliance procedure: A multiple-process analysis and review. <em>Personality and Social Psychology Review, 3</em>(4), 303–325.</li>
     <li>Speed, B. C., Goldstein, B. L., &amp; Goldfried, M. R. (2018). Assertiveness training: A forgotten evidence-based treatment. <em>Clinical Psychology: Science and Practice, 25</em>(1).</li>
    </ol>
-   <p class="note"><b>Tentang AI-nya.</b> Analisis berjalan sepenuhnya di browser, tanpa server dan tanpa API key. Model klasifikasi Naive Bayes dilatih dari contoh balasan berbahasa Indonesia (menerima, bersyarat, menolak), lalu dilengkapi aturan pendeteksi tanda seperti minta maaf berlebihan, alasan panjang, menawarkan alternatif, dan luluh oleh rasa bersalah. AI ini bisa salah membaca kalimat yang ambigu atau sarkas.</p>
+   <p class="note"><b>Tentang AI-nya.</b> Analisis berjalan sepenuhnya di browser, tanpa server dan tanpa API key. AI utamanya adalah model bahasa multibahasa (paraphrase-multilingual-MiniLM, ±120 MB, diunduh sekali lalu tersimpan di browser) yang membaca <i>makna</i> balasanmu dan membandingkannya dengan contoh-contoh berlabel: menerima, bersyarat, menolak (termasuk menolak tidak langsung), bertanya, atau belum jelas. Kalau perangkatmu tidak kuat memuat model itu, web otomatis memakai mode ringan (Naive Bayes). Keduanya dilengkapi aturan pendeteksi tanda seperti minta maaf berlebihan, alasan panjang, menawarkan alternatif, dan luluh oleh rasa bersalah. AI ini bisa salah membaca kalimat yang ambigu atau sarkas.</p>
    <p class="note">Cara skor: permintaan wajar tidak dihitung (menolong itu baik). Untuk permintaan setengah wajar dan tidak wajar: menerima = 2, bersyarat = 1, menolak = 0, dikali bobot tingkat keterlaluan. Skor akhir = 60% perilaku di chat + 40% kuesioner.</p>
   </div>
  </div>
@@ -273,16 +325,47 @@ const tok=s=>{const w=s.toLowerCase().replace(/\b(ga|gak|nggak|ngga|g)bisa\b/g,"
 const NB=(()=>{const m={},V=new Set();for(const c in TRAIN){m[c]={n:0,f:{}};TRAIN[c].forEach(s=>tok(s).forEach(t=>{m[c].f[t]=(m[c].f[t]||0)+1;m[c].n++;V.add(t)}))}
  return s=>{const ts=tok(s),lp={};for(const c in m){let p=Math.log(1/3);ts.forEach(t=>{p+=Math.log(((m[c].f[t]||0)+1)/(m[c].n+V.size))});lp[c]=p}
   const mx=Math.max(...Object.values(lp)),ex={};let z=0;for(const c in lp){ex[c]=Math.exp(lp[c]-mx);z+=ex[c]}for(const c in ex)ex[c]/=z;return ex}})();
+
+/* ===== AI paham makna: embedding multibahasa (transformers.js) + kNN contoh berlabel ===== */
+const EX={
+ terima:["iya boleh","oke siap","boleh banget","gas lah","siap bos","aman nanti aku urus","yaudah sini aku kerjain","oke nanti aku kirim","iya iya boleh","bisa kok tenang aja","sip aku bantuin","yaudah deh demi kamu","boleh dong masa nggak","iya nanti aku transfer","oke aku jemput ya","iya aku yang presentasi","santai pake aja","boleh ambil aja","oke sabtu aku dateng","iya ini akunku","yaudah aku absenin","pasti bisa kok","iya gapapa","oke deh"],
+ syarat:["boleh tapi minggu depan diganti ya","bisa sih asal jangan sering-sering","boleh tapi aku cuma bisa sampai jam 9","aku bantu sebagian aja ya","boleh tapi ini terakhir ya","kalau sempet ya, nggak janji","aku bisa kasih 20 ribu aja","aku ajarin caranya aja ya, bukan aku yang kerjain","boleh asal kamu ganti tepat waktu","bisa tapi nanti gantian bantu aku","kalau cuma sebentar sih bisa","aku bisanya pagi doang","boleh tapi aku cek jadwal dulu","aku temenin aja tapi nggak angkat barang","boleh tapi yang kemarin dibalikin dulu","aku bantu bikin kerangka aja","aku pikir dulu ya","nanti aku kabarin bisa atau nggak","hmm kayaknya bisa deh","mungkin bisa, liat nanti"],
+ tolak:["maaf nggak bisa","nggak bisa","sorry aku nggak bisa","nggak ah","maaf aku lagi bokek","nggak, itu curang","aku nggak mau","nggak dulu deh","maaf aku juga lagi sibuk","itu melanggar aturan","aku nggak nyaman titip absen","kerjain sendiri ya","ogah","nggak bisa, yang kemarin aja belum diganti","maaf tetap nggak bisa","aku nggak mau bohongin dosen","itu bagian kamu","skip dulu","pass","bisa minta yang lain ga sih","minta yang lain aja ya","coba tanya yang lain deh","kenapa nggak minta ke yang lain aja","kok aku terus sih","masa aku lagi","sama yang lain aja","cari orang lain deh","pake ojol aja","itu kan tanggung jawab kamu","duh jangan aku deh","lain kali aja, sekarang nggak","aku juga butuh uangnya","nggak usah ya","aku nggak bakal kasih akunku"],
+ tanya:["kamu kenapa emangnya","kapan butuhnya","berapa lama","emang kamu sakit?","buat apa uangnya","jam berapa","di mana","kenapa kamu nggak dateng","sekarang banget?","bagian yang mana","berapa banyak","kamu pas itu ke mana","gimana caranya","beneran?","serius?","kok bisa telat","kamu sakit atau gimana","emang yang lain ke mana","kenapa harus hari sabtu","itu buat apa"],
+ kabur:["halo","wkwk","hmm","lagi apa","bentar","haha","apa sih","oh","lol","sabar","eh","ya ampun","hah","p","anjir"]
+};
+const AIURL="https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.0.2";
+let EMB=null,EXV=null,aiState="loading",aiTxt="memuat AI…",aiReady;
+const setAI=t=>{aiTxt=t;const el=document.getElementById("aist");if(el)el.textContent=t};
+aiReady=(async()=>{try{
+ const {pipeline,env}=await import(AIURL);env.allowLocalModels=false;
+ EMB=await pipeline("feature-extraction","Xenova/paraphrase-multilingual-MiniLM-L12-v2",{dtype:"q8",progress_callback:x=>{if(x.status==="progress"&&/onnx/.test(x.file||""))setAI("memuat AI "+Math.round(x.progress||0)+"%")}});
+ setAI("menyiapkan AI…");
+ const all=[];for(const c in EX)EX[c].forEach(t=>all.push([c,t]));
+ const out=await EMB(all.map(x=>x[1]),{pooling:"mean",normalize:true});const d=out.dims[1],D=out.data;
+ EXV=all.map((x,k)=>({c:x[0],v:D.slice(k*d,(k+1)*d)}));aiState="ready";setAI("AI siap");
+}catch(e){console.warn(e);aiState="fail";setAI("AI mode ringan")}})();
+async function embProbs(text){
+ if(aiState==="loading"){await Promise.race([aiReady,new Promise(r=>setTimeout(r,15000))])}
+ if(aiState!=="ready")return null;
+ try{const o=await EMB([text],{pooling:"mean",normalize:true}),v=o.data,sims={};
+  EXV.forEach(e=>{let s=0;for(let k=0;k<v.length;k++)s+=v[k]*e.v[k];(sims[e.c]=sims[e.c]||[]).push(s)});
+  const sc={};for(const c in sims){const a=sims[c].sort((x,y)=>y-x).slice(0,3);sc[c]=a.reduce((x,y)=>x+y,0)/a.length}
+  const mx=Math.max(...Object.values(sc));let z=0;const p={};for(const c in sc){p[c]=Math.exp((sc[c]-mx)/.04);z+=p[c]}for(const c in p)p[c]/=z;return p}catch(e){return null}}
+const DEFLECT=/\b(yang lain|orang lain|minta (ke )?(yang|orang)|cari (yang|orang)|sendiri (aja|lah|ya|dong)|kerjain sendiri|kok aku|masa aku|jangan aku|kenapa (harus )?aku|pake ojol|naik ojol|tanggung jawab kamu|bagian kamu)\b/;
 const cnt=(re,s)=>(s.match(re)||[]).length;
-function analyze(text,req,meta){
- const s=text.toLowerCase().replace(/\b(ga|gak|nggak|ngga|g)bisa\b/g,"nggak bisa"),p=NB(text);
+function analyze(text,req,meta,ep){
+ const s=text.toLowerCase().replace(/\b(ga|gak|nggak|ngga|g)bisa\b/g,"nggak bisa");let p=NB(text);const W=ep?.4:1;
+ if(ep){const t=ep.terima+ep.syarat+ep.tolak||1;p={terima:.8*ep.terima/t+.2*p.terima,syarat:.8*ep.syarat/t+.2*p.syarat,tolak:.8*ep.tolak/t+.2*p.tolak}}
+ const defl=DEFLECT.test(s);if(defl)p.tolak+=.6;
  /* aturan penguat: kata kunci tegas mengoreksi model */
- if(/\b(nggak|gak|ga|ngga|enggak|tidak|ogah|no)\b.*\b(bisa|mau|dulu|deh|ah|ya)\b|\b(pass|ogah)\b/.test(s)&&!/\btapi\b/.test(s))p.tolak+=.5;
- if(/\b(tapi|asal|asalkan|kalau|kecuali|setengah|sebagian|cuma bisa|nggak janji)\b/.test(s)&&!/^(maaf|sorry)?\s*(nggak|gak|ga|tidak)\b/.test(s))p.syarat+=.35;
+ if(/\b(nggak|gak|ga|ngga|enggak|tidak|ogah|no)\b.*\b(bisa|mau|dulu|deh|ah|ya)\b|\b(pass|ogah)\b/.test(s)&&!/\btapi\b/.test(s))p.tolak+=.5*W;
+ if(/\b(tapi|asal|asalkan|kalau|kecuali|setengah|sebagian|cuma bisa|nggak janji)\b/.test(s)&&!/^(maaf|sorry)?\s*(nggak|gak|ga|tidak)\b/.test(s)&&!defl)p.syarat+=.35*W;
  const z=p.terima+p.syarat+p.tolak;for(const c in p)p[c]/=z;
  const stance=Object.keys(p).sort((a,b)=>p[b]-p[a])[0],conf=p[stance];
  const words=s.split(/\s+/).filter(Boolean).length,maaf=cnt(/\b(maaf|maap|sorry|sori|mf)\b/g,s);
  const sig=[],say=[];
+ if(defl&&stance==="tolak"){sig.push("menolak tidak langsung");say.push("Kamu menolak secara tidak langsung, misalnya dengan mengalihkan ke orang lain atau menyuruh dia mengurus sendiri. Batasnya ada, tapi cara tidak langsung kadang membuat orang lain mencoba lagi.")}
  if(maaf>=2){sig.push("minta maaf berlebihan");say.push("Ada "+maaf+" kata maaf. Minta maaf berulang sering menandakan rasa bersalah saat menolak, padahal menolak bukan kesalahan.")}
  else if(maaf===1&&stance==="tolak"){sig.push("menolak dengan sopan");say.push("Satu kata maaf cukup: sopan tanpa terdengar merasa bersalah.")}
  if(stance!=="terima"&&words>=18&&/\b(soalnya|karena|karna|habisnya|abisnya|lagian|sebenernya|sebenarnya)\b/.test(s)){sig.push("alasan panjang");say.push("Kamu menjelaskan alasan cukup panjang ("+words+" kata). Orang yang sulit menolak sering merasa penolakan harus dibenarkan dulu.")}
@@ -299,7 +382,7 @@ function analyze(text,req,meta){
  if(stance==="terima")head=lv===0?"Kamu langsung membantu. Untuk permintaan wajar seperti ini, itu sehat dan tidak dihitung sebagai people-pleasing.":lv===3?"Kamu menuruti permintaan yang melanggar aturan akademik. Ini tanda batas yang sangat mudah ditembus.":"Kamu menuruti permintaan yang sebenarnya merugikanmu (tingkat keterlaluan "+lv+" dari 3).";
  else if(stance==="syarat")head="Kamu membantu dengan syarat. Ini kompromi: ada batas, tapi masih bisa ditawar.";
  else head=lv===0?"Kamu menolak permintaan yang wajar. Tidak salah. Perhatikan saja apakah itu karena memang tidak bisa atau karena kebiasaan.":"Kamu menolak. Batasmu terjaga.";
- return{stance,conf,score:stance==="terima"?2:stance==="syarat"?1:0,sig,text:[head,...say].join(" "),words,maaf};
+ return{stance,conf,score:stance==="terima"?2:stance==="syarat"?1:0,sig,text:[head,...say].join(" "),words,maaf,defl,mode:ep?"makna":"ringan"};
 }
 
 /* ===== Data tes ===== */
@@ -320,7 +403,9 @@ const LBL={terima:"Menerima",syarat:"Bersyarat",tolak:"Menolak",tanya:"Bertanya 
 const QRE=/\?|\b(kenapa|knp|kok|emang|emangnya|buat apa|untuk apa|ngapain|kapan|jam berapa|berapa|brp|dimana|di mana|dmn|kemana|ke mana|darimana|dari mana|gimana|gmn|bagaimana|caranya|sakit|serius|beneran|siapa|apa)\b/;
 const ANS=/^(iya|iyaa|iyap|boleh|oke|ok|okay|siap|sip|gas|bisa|nggak|gak|ga|ngga|enggak|gabisa|tidak|maaf|sorry|sori|ogah|no|yaudah|yuk|ayo)\b/;
 const DEC=/\b(iya|boleh|oke|ok|siap|bisa|gas|sip|nggak|gak|ga|ngga|enggak|gabisa|tidak|ogah|maaf|sorry|tapi|asal|pinjemin|transfer|kerjain|jemput|bantu)\b/;
-const intentOf=(v,a)=>{const s=v.toLowerCase().trim();
+const intentOf=(v,a,ep)=>{const s=v.toLowerCase().trim();
+ if(a.defl)return"putus";
+ if(ep){const dec=Math.max(ep.terima,ep.syarat,ep.tolak);if(ep.tanya>dec&&ep.tanya>.3)return"tanya";if(ep.kabur>dec&&ep.kabur>.3&&!DEC.test(s))return"kabur";if(dec>=Math.max(ep.tanya,ep.kabur))return"putus"}
  if(QRE.test(s)&&!ANS.test(s))return"tanya";
  if(/^(halo|hai|hi|hey|p|woi|oi|bro|sis|eh)\b[\s!.?]*$/.test(s))return"kabur";
  if(a.conf<.55&&!DEC.test(s))return"kabur";
@@ -346,7 +431,7 @@ const scr=$("scr");
 let S,i,lk,busy=false;
 const reset=()=>{S={ans:[],cave:0,press:0,log:[],qs:0};lk=Array(LQ.length).fill(0);i=0};
 const intro=()=>{reset();$("res").classList.remove("on");scr.innerHTML='<div class="start"><div class="av" style="margin:0 auto;width:64px;height:64px;font-size:26px">R</div><h2>Raka</h2><p>Teman sekelasmu. Akrab, sering minta tolong. Balas chat-nya dengan mengetik sendiri.</p><button class="btn" id="go">Mulai chat</button></div>';$("go").onclick=chat};
-const chat=()=>{scr.innerHTML='<div class="bar"><div class="av">R</div><div><b>Raka</b><small>online</small></div><span class="prog" id="pg"></span></div><div class="chat" id="ch"></div><form class="inbar" id="fm"><textarea id="tx" rows="1" placeholder="Ketik balasanmu…" aria-label="Balasan untuk Raka" disabled></textarea><button class="send" id="sd" aria-label="Kirim" disabled>➤</button></form>';
+const chat=()=>{scr.innerHTML='<div class="bar"><div class="av">R</div><div><b>Raka</b><small>online · <span id="aist">'+aiTxt+'</span></small></div><span class="prog" id="pg"></span></div><div class="chat" id="ch"></div><form class="inbar" id="fm"><textarea id="tx" rows="1" placeholder="Ketik balasanmu…" aria-label="Balasan untuk Raka" disabled></textarea><button class="send" id="sd" aria-label="Kirim" disabled>➤</button></form>';
  const tx=$("tx");let prev=0;
  tx.addEventListener("input",()=>{if(M.first<0)M.first=(performance.now()-M.t0)/1000;const L=tx.value.length;if(L<prev)M.del+=prev-L;prev=L;tx.style.height="auto";tx.style.height=Math.min(tx.scrollHeight,120)+"px";$("sd").disabled=tx.value.trim().length<1});
  tx.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();$("fm").requestSubmit()}});
@@ -356,22 +441,23 @@ let M={t0:0,first:-1,del:0},onSend=null;
 const lock=b=>{busy=b;$("tx").disabled=b;if(!b){$("tx").focus({preventScroll:true})}};
 const ask=fn=>{M={t0:performance.now(),first:-1,del:0};onSend=v=>{add(v,"me");fn(v,{...M,first:M.first<0?0:M.first})};lock(false)};
 const add=(txt,cls)=>{const ch=$("ch"),d=document.createElement("div");d.className="msg "+cls;d.textContent=txt;ch.appendChild(d);ch.scrollTop=ch.scrollHeight;return d};
-const aiCard=(a,cb)=>{const ch=$("ch"),d=document.createElement("div");d.className="ai";d.innerHTML='<b>Analisis AI</b><span>Menganalisis jawabanmu…</span>';ch.appendChild(d);ch.scrollTop=ch.scrollHeight;
- setTimeout(()=>{d.innerHTML='<b></b><span></span><div class="chips"></div>';d.querySelector("b").textContent="Analisis AI · "+LBL[a.stance]+(a.score==null?"":" ("+Math.round(a.conf*100)+"% yakin)");d.querySelector("span").textContent=a.text;d.querySelector(".chips").innerHTML=a.sig.map(()=>"<span></span>").join("");d.querySelectorAll(".chips span").forEach((x,k)=>x.textContent=a.sig[k]);ch.scrollTop=ch.scrollHeight;cb()},650)};
+const aiStart=()=>{const ch=$("ch"),d=document.createElement("div");d.className="ai busy";d.innerHTML='<b>Analisis AI</b><span>Membaca maksud jawabanmu…</span>';ch.appendChild(d);ch.scrollTop=ch.scrollHeight;return{d,t:performance.now()}};
+const aiFill=(cd,a,cb)=>{const wait=Math.max(0,550-(performance.now()-cd.t));setTimeout(()=>{const d=cd.d,ch=$("ch");d.classList.remove("busy");d.classList.add("done");d.innerHTML='<b></b><span></span><div class="chips"></div>';d.querySelector("b").textContent="Analisis AI · "+LBL[a.stance]+(a.score==null?"":" ("+Math.round(a.conf*100)+"% yakin)");d.querySelector("span").textContent=a.text;d.querySelector(".chips").innerHTML=a.sig.map(()=>"<span></span>").join("");d.querySelectorAll(".chips span").forEach((x,k)=>x.textContent=a.sig[k]);ch.scrollTop=ch.scrollHeight;cb()},wait)};
 const typing=cb=>{const ch=$("ch"),d=document.createElement("div");d.className="typing";d.textContent="Raka sedang mengetik…";ch.appendChild(d);ch.scrollTop=ch.scrollHeight;setTimeout(()=>{d.remove();cb()},700+Math.random()*500)};
 const pick=a=>a[Math.floor(Math.random()*a.length)];
-const converse=(r,pressure,done)=>{let turns=0;const loop=()=>ask((v,m)=>{
- const a0=analyze(v,r,{...m,pressure});
- const kind=turns>=3?"putus":intentOf(v,a0);
- if(kind==="putus"){S.log.push({lv:r.c,ans:v,a:a0,m,pressure});aiCard(a0,()=>done(a0));return}
+const converse=(r,pressure,done)=>{let turns=0;const loop=()=>ask(async(v,m)=>{
+ const cd=aiStart();const ep=await embProbs(v);
+ const a0=analyze(v,r,{...m,pressure},ep);
+ const kind=turns>=3?"putus":intentOf(v,a0,ep);
+ if(kind==="putus"){S.log.push({lv:r.c,ans:v,a:a0,m,pressure});aiFill(cd,a0,()=>done(a0));return}
  turns++;if(kind==="tanya")S.qs++;
  const o=analyzeOther(kind,m,turns);S.log.push({lv:r.c,ans:v,a:o,m,pressure,other:true});
- aiCard(o,()=>typing(()=>{
+ aiFill(cd,o,()=>typing(()=>{
   if(kind==="tanya"){add(r.qa[topic(v)]||r.qa.why,"them");setTimeout(()=>typing(()=>{add(turns>=3?"Udah ah, intinya bisa atau nggak?":pick(NUDGE),"them");loop()}),250)}
   else{add(turns>=3?"Udah ah, intinya bisa atau nggak?":pick(["Maksudnya bisa atau nggak nih?","Hehe, jadi gimana? Bisa bantu?","Eh, jadi mau atau nggak?"]),"them");loop()}
  }));
 });loop()};
-const react=(a,pressure)=>{if(pressure)return a.stance==="terima"?pick(["Nah gitu dong, makasih ya","Makasih, kamu emang baik"]):pick(["Hmm, oke","Yaudah deh","Oh… oke"]);if(a.stance==="syarat"&&a.sig.includes("menawarkan alternatif"))return"Oh boleh juga gitu, oke makasih";return pick(REPLY[a.stance])};
+const react=(a,pressure)=>{if(pressure)return a.stance==="terima"?pick(["Nah gitu dong, makasih ya","Makasih, kamu emang baik"]):pick(["Hmm, oke","Yaudah deh","Oh… oke"]);if(a.stance==="tolak"&&a.defl)return pick(["Hmm, yaudah aku coba tanya yang lain deh","Oke deh, aku cari orang lain"]);if(a.stance==="syarat"&&a.sig.includes("menawarkan alternatif"))return"Oh boleh juga gitu, oke makasih";return pick(REPLY[a.stance])};
 const next=()=>{
  if(i>=R.length){typing(()=>{add("Udah dulu ya, makasih udah bales chatku","them");setTimeout(survey,1200)});return}
  $("pg").textContent="Permintaan "+(i+1)+"/"+R.length;
@@ -436,10 +522,42 @@ const result=()=>{
 $("again").onclick=()=>{intro();scr.scrollIntoView({behavior:"smooth"})};
 intro();
 
-{const pin=$("pin"),cards=[...document.querySelectorAll(".pcard")],nav=[...document.querySelectorAll("#pnav li")],bar=$("pbar");let tk2=false;
- const upd=()=>{const r=pin.getBoundingClientRect(),span=pin.offsetHeight-innerHeight,p=Math.min(1,Math.max(0,-r.top/span)),k=Math.min(cards.length-1,Math.floor(p*cards.length));
-  bar.style.width=(p*100).toFixed(1)+"%";cards.forEach((c,j)=>{c.classList.toggle("on",j===k);c.classList.toggle("past",j<k)});nav.forEach((n,j)=>n.classList.toggle("on",j===k));tk2=false};
- addEventListener("scroll",()=>{if(!tk2){tk2=true;requestAnimationFrame(upd)}},{passive:true});addEventListener("resize",upd);upd();}
+{const pin=$("pin"),cards=[...document.querySelectorAll(".pcard")],nav=[...document.querySelectorAll("#pnav li")],bar=$("pbar"),box=$("pcards"),dots=[...document.querySelectorAll("#pdots button")];let tk2=false;
+ const mob=()=>matchMedia("(max-width:760px)").matches;
+ const upd=()=>{tk2=false;if(mob())return;const r=pin.getBoundingClientRect(),span=pin.offsetHeight-innerHeight,p=Math.min(1,Math.max(0,-r.top/span)),k=Math.min(cards.length-1,Math.floor(p*cards.length));
+  bar.style.width=(p*100).toFixed(1)+"%";cards.forEach((c,j)=>{c.classList.toggle("on",j===k);c.classList.toggle("past",j<k)});nav.forEach((n,j)=>n.classList.toggle("on",j===k))};
+ addEventListener("scroll",()=>{if(!tk2){tk2=true;requestAnimationFrame(upd)}},{passive:true});addEventListener("resize",upd);upd();
+ nav.forEach((n,j)=>n.onclick=()=>{const span=pin.offsetHeight-innerHeight;scrollTo({top:pin.offsetTop+span*(j+.5)/cards.length,behavior:"smooth"})});
+ const setDot=k=>dots.forEach((d,j)=>d.setAttribute("aria-current",j===k));
+ box.addEventListener("scroll",()=>{if(!mob())return;const k=Math.round(box.scrollLeft/(cards[1].offsetLeft-cards[0].offsetLeft||1));setDot(Math.max(0,Math.min(cards.length-1,k)))},{passive:true});
+ dots.forEach((d,j)=>d.onclick=()=>{box.scrollTo({left:cards[j].offsetLeft-cards[0].offsetLeft,behavior:"smooth"});setDot(j)});}
+
+{const bg=$("bgw"),WORDS=["iya","boleh","nggak","maaf…","oke deh","tolong dong","bisa?","nanti ya","pass","kok aku?","sekali ini aja","makasih","ya udah deh","sorry"];
+ let sd=7;const rnd=()=>(sd=sd*16807%2147483647)/2147483647;const sm=innerWidth<700;
+ bg.innerHTML=WORDS.slice(0,sm?10:14).map(()=>"<b></b>").join("");
+ bg.querySelectorAll("b").forEach((b,k)=>{const dep=rnd();b.textContent=WORDS[k];
+  b.style.cssText="left:"+(rnd()*86).toFixed(1)+"%;top:"+(rnd()*165-5).toFixed(1)+"%;--fs:"+Math.round((sm?26:34)+dep*(sm?34:70))+"px;--z:"+Math.round(-420+dep*360)+"px;--o:"+(.05+dep*.1).toFixed(2)+";--t:"+(10+rnd()*10).toFixed(1)+"s;--dl:-"+(rnd()*10).toFixed(1)+"s;--k:"+Math.round(-14-dep*46)+"px;--sk:"+(-.02-dep*.1).toFixed(3)});
+ if(!matchMedia("(prefers-reduced-motion: reduce)").matches){
+  addEventListener("pointermove",e=>bg.style.setProperty("--px",(e.clientX/innerWidth-.5).toFixed(3)),{passive:true});
+  let tk3=false;addEventListener("scroll",()=>{if(tk3)return;tk3=true;requestAnimationFrame(()=>{bg.style.setProperty("--sy",scrollY+"px");tk3=false})},{passive:true});}}
+
+{const RM=matchMedia("(prefers-reduced-motion: reduce)").matches;
+ /* reveal saat scroll */
+ const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}}),{threshold:.15});
+ document.querySelectorAll(".rv").forEach(el=>io.observe(el));
+ const mo=new MutationObserver(()=>document.querySelectorAll(".row:not(.rv)").forEach((el,k)=>{el.classList.add("rv");el.style.transitionDelay=(k*.08)+"s";io.observe(el)}));mo.observe($("rRows"),{childList:true});
+ if(!RM){
+  /* cahaya ikut kursor/jari */
+  const root=document.documentElement;addEventListener("pointermove",e=>{root.style.setProperty("--mx",e.clientX+"px");root.style.setProperty("--my",e.clientY+"px")},{passive:true});
+  /* debu emas */
+  const cv=$("dust"),cx=cv.getContext("2d");let W2,H2,P=[];const dpr=Math.min(2,devicePixelRatio||1);
+  const size=()=>{W2=cv.width=innerWidth*dpr;H2=cv.height=innerHeight*dpr;const n=innerWidth<700?40:80;P=Array.from({length:n},()=>({x:Math.random()*W2,y:Math.random()*H2,r:(.6+Math.random()*1.8)*dpr,v:(.15+Math.random()*.5)*dpr,w:Math.random()*6.28,a:.3+Math.random()*.7}))};
+  size();addEventListener("resize",size);
+  const tick=t=>{cx.clearRect(0,0,W2,H2);for(const q of P){q.y-=q.v;q.x+=Math.sin(t/1400+q.w)*.3*dpr;if(q.y<-10){q.y=H2+10;q.x=Math.random()*W2}
+   const tw=.45+.55*Math.sin(t/500+q.w*3);cx.beginPath();cx.arc(q.x,q.y,q.r,0,6.283);cx.fillStyle="rgba(240,210,122,"+(q.a*tw).toFixed(3)+")";cx.shadowColor="rgba(240,210,122,.9)";cx.shadowBlur=8*dpr;cx.fill()}
+   requestAnimationFrame(tick)};
+  requestAnimationFrame(tick);}
+}
 const W=$("welcome");
 const closeW=()=>{if(W.classList.contains("out"))return;W.classList.add("out");document.body.classList.remove("lock");setTimeout(()=>{W.remove();const g=$("go");g&&g.focus({preventScroll:true})},560)};
 document.querySelectorAll("[data-go]").forEach(b=>b.onclick=closeW);
