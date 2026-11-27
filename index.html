@@ -93,11 +93,44 @@ table{border-collapse:collapse;width:100%}
 .send:disabled{opacity:.4}
 .sum{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px 18px;margin-top:18px}
 .sum p{margin:0 0 10px;font-size:15px}
+.start .btn{background:var(--pink);color:#2a0f1c}
+.wel{position:fixed;inset:0;z-index:50;background:#ff6f92;color:#2a0f1c;display:grid;place-items:center;padding:24px 16px;overflow:auto;transition:opacity .55s ease,transform .55s ease}
+.wel.out{opacity:0;transform:scale(1.04);pointer-events:none}
+.wel-in{max-width:520px;width:100%;display:grid;gap:12px;text-align:center}
+.wt{font-size:clamp(34px,7vw,52px);line-height:1.05;letter-spacing:-.02em;margin:0;text-wrap:balance;opacity:0;animation:wpop .6s .1s forwards}
+.wsub{margin:0;font-weight:600;opacity:0;animation:wpop .6s .35s forwards}
+.bub{display:flex;flex-direction:column;gap:8px;margin:14px 0 6px;text-align:left}
+.wb{align-self:flex-start;max-width:85%;background:#fff;color:#1d1530;padding:9px 14px;border-radius:18px 18px 18px 6px;font-weight:600;font-size:var(--s,15px);box-shadow:0 4px 0 rgba(42,15,28,.18);opacity:0;transform:translateY(12px) scale(.94);animation:wpop .45s var(--d) forwards}
+.wb.me{align-self:flex-end;background:#4b2a8a;color:#fff;border-radius:18px 18px 6px 18px}
+.wb.dots{animation:wpop .45s var(--d) forwards,blink 1.1s calc(var(--d) + .5s) infinite}
+@keyframes wpop{to{opacity:1;transform:none}}
+@keyframes blink{50%{opacity:.35}}
+.wgo{justify-self:center;min-width:200px;opacity:0;animation:wpop .6s .6s forwards}
+.wnote{margin:0;font-size:14px;opacity:0;animation:wpop .6s .8s forwards}
+body.lock{overflow:hidden}
+@media(prefers-reduced-motion:reduce){.wt,.wsub,.wb,.wgo,.wnote{animation:none;opacity:1;transform:none}.wel{transition:none}}
 @media(max-width:860px){.wrap{grid-template-columns:minmax(0,1fr)}.phone{max-width:440px;width:100%;margin:0 auto}.grid2{grid-template-columns:minmax(0,1fr)}}
 @media(max-width:600px){.screen{height:min(600px,76svh)}.map thead{display:none}.map tr{display:grid;padding:8px 0;border-bottom:1px solid var(--line)}.map td{border:0;padding:2px 0}}
 </style>
 </head>
-<body>
+<body class="lock">
+<div class="wel" id="welcome" role="dialog" aria-modal="true" aria-labelledby="wTitle">
+ <div class="wel-in">
+  <h1 class="wt" id="wTitle">Seberapa sering kamu bilang "iya"?</h1>
+  <p class="wsub">People-Pleaser Detector · tes berbasis jurnal psikologi</p>
+  <div class="bub" aria-hidden="true">
+   <div class="wb" style="--d:.9s">Eh, boleh pinjam pulpen?</div>
+   <div class="wb me" style="--d:1.5s">Iya boleh</div>
+   <div class="wb" style="--d:2.1s;--s:16px">Titip absen dong nanti</div>
+   <div class="wb me" style="--d:2.7s">Hmm… oke deh</div>
+   <div class="wb" style="--d:3.3s;--s:18px">Kerjain bagianku juga ya?</div>
+   <div class="wb" style="--d:3.9s;--s:20px">Pinjam akun ujianmu dong!</div>
+   <div class="wb me dots" style="--d:4.5s">…</div>
+  </div>
+  <button class="btn wgo" id="wgo">Mulai tes</button>
+  <p class="wnote">Sekitar 4 menit · tidak ada data yang disimpan</p>
+ </div>
+</div>
 <section class="band top">
  <div class="wrap">
   <div>
@@ -338,6 +371,11 @@ const result=()=>{
 };
 $("again").onclick=()=>{intro();scr.scrollIntoView({behavior:"smooth"})};
 intro();
+const W=$("welcome");
+const closeW=()=>{if(W.classList.contains("out"))return;W.classList.add("out");document.body.classList.remove("lock");setTimeout(()=>{W.remove();const g=$("go");g&&g.focus({preventScroll:true})},560)};
+$("wgo").onclick=closeW;
+W.addEventListener("keydown",e=>{if(e.key==="Escape")closeW()});
+$("wgo").focus({preventScroll:true});
 }
 </script>
 </body>
