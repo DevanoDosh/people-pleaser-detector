@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>People-Pleaser Detector</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+/* VOICE everyday, hangat tapi jujur; ini alat eksplorasi berbasis riset
+   IDEA layar chat HP: teman yang terus minta tolong, makin lama makin keterlaluan
+   PICTURE ponsel berisi percakapan hidup; hasil berupa meter dan rincian
+   COLOUR putih / ink ungu tua, pink-koral dominan, ungu pendukung, kuning penanda
+   TYPE Plus Jakarta Sans 800 + Plus Jakarta Sans
+   LAYOUT laptop: penjelasan kiri, ponsel kanan; HP: judul, ponsel, catatan */
+:root{color-scheme:light dark;--bg:light-dark(#fff,#160f22);--ink:light-dark(#1d1530,#f3eefb);--mut:light-dark(#5d5470,#b6abc8);--pink:light-dark(#ff5c84,#ff7a9a);--pinkS:light-dark(#ffe3ea,#3a1d2c);--vio:light-dark(#4b2a8a,#b89cff);--line:light-dark(#e6e0ef,#33284a);--card:light-dark(#faf8fd,#1f1630);--yel:#ffd34d;--me:light-dark(#4b2a8a,#6a45b8)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.55 "Plus Jakarta Sans",system-ui,sans-serif;overflow-x:clip}
+.band{padding:clamp(24px,4vw,56px) max(5vw,16px)}
+.top{background:var(--pink);color:#2a0f1c}
+.wrap{max-width:1160px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,420px);gap:clamp(24px,4vw,56px);align-items:start}
+h1{font-size:clamp(34px,5vw,52px);line-height:1.05;letter-spacing:-.02em;margin:0 0 14px;text-wrap:balance}
+h2{font-size:24px;line-height:1.15;margin:0 0 10px}
+.lead{font-size:17px;max-width:56ch;margin:0 0 18px}
+.steps{list-style:none;padding:0;margin:0 0 20px;display:grid;gap:8px}
+.steps li{display:flex;gap:10px;align-items:baseline}
+.steps b{flex:none;width:26px;height:26px;border-radius:50%;background:#2a0f1c;color:var(--pink);display:grid;place-items:center;font-size:13px}
+.note{font-size:14px;opacity:.85;max-width:56ch}
+.phone{background:#1d1530;border-radius:38px;padding:12px;box-shadow:0 18px 0 -8px rgba(42,15,28,.25)}
+.screen{color:var(--ink);background:light-dark(#f4f0f8,#120c1c);border-radius:28px;height:min(640px,78svh);display:flex;flex-direction:column;overflow:hidden}
+.bar{display:flex;align-items:center;gap:10px;padding:14px 16px;background:var(--card);border-bottom:1px solid var(--line)}
+.av{width:38px;height:38px;border-radius:50%;background:var(--vio);color:var(--bg);display:grid;place-items:center;font-weight:800}
+.bar small{display:block;color:var(--mut);font-size:13px}
+.prog{margin-left:auto;font-size:13px;color:var(--mut);white-space:nowrap}
+.chat{flex:1;overflow-y:auto;padding:16px 12px;display:flex;flex-direction:column;gap:8px}
+.msg{max-width:82%;padding:9px 13px;border-radius:18px;font-size:15px;line-height:1.4;animation:pop .25s ease-out}
+.them{background:var(--card);color:var(--ink);border:1px solid var(--line);border-bottom-left-radius:6px;align-self:flex-start}
+.me{background:var(--me);color:#fff;border-bottom-right-radius:6px;align-self:flex-end}
+.sys{align-self:center;font-size:13px;color:var(--mut);background:transparent}
+.typing{color:var(--mut);font-size:13px;align-self:flex-start;padding-left:6px}
+@keyframes pop{from{transform:translateY(6px);opacity:0}to{transform:none;opacity:1}}
+@media(prefers-reduced-motion:reduce){.msg{animation:none}}
+.opts{display:grid;gap:8px;padding:12px;background:var(--card);border-top:1px solid var(--line)}
+button{font:inherit;cursor:pointer}
+.opt{min-height:46px;border-radius:14px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);text-align:left;padding:10px 14px;font-weight:600}
+.opt:hover{border-color:var(--vio)}
+.opt:focus-visible,.btn:focus-visible,.lk:focus-visible{outline:3px solid var(--yel);outline-offset:2px}
+.btn{min-height:48px;border:0;border-radius:999px;padding:0 26px;background:#2a0f1c;color:#fff;font-weight:800;font-size:16px}
+.btn.alt{background:var(--vio);color:var(--bg)}
+.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
+.start{padding:24px;display:grid;gap:14px;align-content:center;height:100%;text-align:center}
+.start p{margin:0;color:var(--mut)}
+.likert{padding:14px 12px;overflow-y:auto;flex:1}
+.q{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px;margin-bottom:10px}
+.q p{margin:0 0 10px;font-size:15px;font-weight:600}
+.sc{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
+.sc button{min-height:44px;border-radius:12px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);font-weight:800}
+.sc button[aria-pressed=true]{background:var(--pink);border-color:var(--pink);color:#2a0f1c}
+.scl{display:flex;justify-content:space-between;font-size:13px;color:var(--mut);margin-top:4px}
+.res{display:none}
+.res.on{display:block}
+.meter{height:22px;border-radius:999px;background:var(--pinkS);overflow:hidden;margin:10px 0 6px}
+.meter i{display:block;height:100%;background:var(--pink);border-radius:999px;transition:width .8s}
+.big{font-size:clamp(56px,9vw,84px);font-weight:800;line-height:1;letter-spacing:-.03em}
+.tag{display:inline-block;background:var(--yel);color:#2a0f1c;border-radius:8px;padding:2px 10px;font-weight:800}
+.rows{display:grid;gap:14px;margin:18px 0}
+.row .lab{display:flex;justify-content:space-between;gap:12px;font-weight:600}
+.row .lab span{white-space:nowrap;color:var(--mut)}
+.row .m{height:10px;border-radius:99px;background:var(--line);margin-top:6px;overflow:hidden}
+.row .m i{display:block;height:100%;background:var(--vio)}
+.row p{margin:6px 0 0;font-size:14px;color:var(--mut)}
+.acts{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.grid2{max-width:1160px;margin:0 auto;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(20px,3vw,40px)}
+.box{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px}
+.box p,.box li{font-size:15px}
+.refs{padding-left:18px;margin:0}
+.refs li{margin-bottom:10px}
+.refs em{font-style:italic}
+.map td,.map th{text-align:left;padding:8px 6px;border-bottom:1px solid var(--line);vertical-align:top;font-size:14px}
+.scroll{overflow-x:auto}
+table{border-collapse:collapse;width:100%}
+.warn{background:var(--pinkS);border-radius:14px;padding:12px 14px;font-size:14px}
+.ai{color:var(--ink);align-self:stretch;background:light-dark(#fff8db,#2b2410);border:1px solid light-dark(#f1dc8a,#5a4a17);border-radius:14px;padding:10px 12px;font-size:14px;line-height:1.45;animation:pop .25s ease-out}
+.ai b{display:block;font-size:13px;margin-bottom:2px}
+.ai .chips{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}
+.ai .chips span{background:light-dark(#ffe9a3,#4a3c12);border-radius:99px;padding:1px 8px;font-size:13px}
+.inbar{display:flex;gap:8px;padding:10px;background:var(--card);border-top:1px solid var(--line);align-items:flex-end}
+.inbar textarea{flex:1;font:inherit;font-size:16px;resize:none;border:1.5px solid var(--line);border-radius:20px;padding:10px 14px;background:var(--bg);color:var(--ink);max-height:120px;min-height:44px}
+.inbar textarea:focus-visible{outline:3px solid var(--yel);outline-offset:1px}
+.send{flex:none;width:46px;height:46px;border-radius:50%;border:0;background:var(--me);color:#fff;font-weight:800;font-size:18px}
+.send:disabled{opacity:.4}
+.sum{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px 18px;margin-top:18px}
+.sum p{margin:0 0 10px;font-size:15px}
+@media(max-width:860px){.wrap{grid-template-columns:minmax(0,1fr)}.phone{max-width:440px;width:100%;margin:0 auto}.grid2{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:600px){.screen{height:min(600px,76svh)}.map thead{display:none}.map tr{display:grid;padding:8px 0;border-bottom:1px solid var(--line)}.map td{border:0;padding:2px 0}}
+</style>
+</head>
+<body>
+<section class="band top">
+ <div class="wrap">
+  <div>
+   <h1>People-Pleaser Detector</h1>
+   <p class="lead">Temanmu, Raka, akan chat minta tolong. Awalnya sepele, makin lama makin keterlaluan. Ketik balasanmu sendiri, persis seperti kamu biasa membalas. Kamu juga boleh bertanya balik ("kenapa?", "kapan?", "berapa?"), Raka akan menjawab. Setiap balasanmu langsung dianalisis AI: menerima, memberi syarat, menolak, atau masih bertanya, plus tanda-tanda dari kata-katamu.</p>
+   <ol class="steps">
+    <li><b>1</b><span>Simulasi chat: 10 permintaan bertingkat (pola <em>foot-in-the-door</em>), dijawab dengan mengetik bebas.</span></li>
+    <li><b>2</b><span>6 pernyataan singkat tentang kebiasaanmu.</span></li>
+    <li><b>3</b><span>Hasil: skor, tipe, dan rincian per aspek.</span></li>
+   </ol>
+   <p class="note">Sekitar 4 menit. Tidak ada data yang dikirim atau disimpan, semuanya dihitung di perangkatmu.</p>
+  </div>
+  <div class="phone"><div class="screen" id="scr"></div></div>
+ </div>
+</section>
+
+<section class="band res" id="res">
+ <div class="grid2">
+  <div>
+   <h2>Hasilmu</h2>
+   <div class="big" id="rScore">0</div>
+   <div class="meter"><i id="rBar" style="width:0"></i></div>
+   <p><span class="tag" id="rType"></span></p>
+   <p id="rDesc"></p>
+   <div class="acts"><button class="btn" id="copy">Salin hasil</button><button class="btn ghost" id="again">Ulangi tes</button></div>
+   <p class="note" id="copied" aria-live="polite"></p>
+   <div class="sum"><h2>Analisis AI keseluruhan</h2><div id="rSum"></div></div>
+  </div>
+  <div>
+   <div class="rows" id="rRows"></div>
+   <div class="warn">Ini alat eksplorasi diri, belum divalidasi secara psikometrik dan <b>bukan diagnosis</b>. Kalau kebiasaan mengalah sudah bikin kamu tertekan, cemas, atau kelelahan, ngobrol dengan psikolog (misalnya layanan konseling kampus) bisa sangat membantu.</div>
+  </div>
+ </div>
+</section>
+
+<section class="band">
+ <div class="grid2">
+  <div class="box">
+   <h2>Dasar psikologinya</h2>
+   <p><b>Unmitigated communion (UC).</b> Helgeson &amp; Fritz mendefinisikan UC sebagai fokus pada orang lain sampai mengabaikan diri sendiri: terlalu terlibat dalam urusan orang dan menelantarkan kebutuhan pribadi. UC berkaitan dengan distres psikologis. Bagian kuesioner tes ini mengukur dua ciri itu: <i>self-neglect</i> dan <i>overinvolvement</i>.</p>
+   <p><b>Foot-in-the-door.</b> Freedman &amp; Fraser (1966) menunjukkan bahwa orang yang sudah menuruti permintaan kecil lebih mungkin menuruti permintaan yang lebih besar. Simulasi chat ini memakai urutan bertingkat yang sama, jadi yang diukur adalah <i>di titik mana</i> kamu berhenti.</p>
+   <p><b>Asertivitas.</b> Kemampuan menyatakan preferensi dan menolak permintaan secara langsung dibahas Speed, Goldstein &amp; Goldfried (2018) sebagai faktor yang terkait banyak masalah klinis, dan pelatihan asertivitas sebagai intervensi berbasis bukti.</p>
+   <div class="scroll"><table class="map"><thead><tr><th>Bagian tes</th><th>Dasar</th></tr></thead><tbody>
+    <tr><td>Kepatuhan pada permintaan tidak wajar</td><td>Foot-in-the-door; asertivitas</td></tr>
+    <tr><td>Luluh saat dibuat merasa bersalah</td><td>Asertivitas (bertahan pada penolakan)</td></tr>
+    <tr><td>Kuesioner 6 butir</td><td>Konstruk UC (butir ditulis ulang, bukan skala asli)</td></tr>
+    <tr><td>Jeda sebelum mengetik &amp; jumlah hapusan</td><td>Indikator eksploratif, tidak ada norma baku</td></tr>
+    <tr><td>Analisis AI tiap jawaban</td><td>Klasifikasi teks + deteksi tanda asertif / tidak asertif</td></tr>
+   </tbody></table></div>
+  </div>
+  <div class="box">
+   <h2>Referensi jurnal</h2>
+   <ol class="refs">
+    <li>Helgeson, V. S., &amp; Fritz, H. L. (1998). A theory of unmitigated communion. <em>Personality and Social Psychology Review, 2</em>(3), 173–183.</li>
+    <li>Fritz, H. L., &amp; Helgeson, V. S. (1998). Distinctions of unmitigated communion from communion: Self-neglect and overinvolvement with others. <em>Journal of Personality and Social Psychology, 75</em>(1), 121–140.</li>
+    <li>Freedman, J. L., &amp; Fraser, S. C. (1966). Compliance without pressure: The foot-in-the-door technique. <em>Journal of Personality and Social Psychology, 4</em>(2), 195–202.</li>
+    <li>Burger, J. M. (1999). The foot-in-the-door compliance procedure: A multiple-process analysis and review. <em>Personality and Social Psychology Review, 3</em>(4), 303–325.</li>
+    <li>Speed, B. C., Goldstein, B. L., &amp; Goldfried, M. R. (2018). Assertiveness training: A forgotten evidence-based treatment. <em>Clinical Psychology: Science and Practice, 25</em>(1).</li>
+   </ol>
+   <p class="note"><b>Tentang AI-nya.</b> Analisis berjalan sepenuhnya di browser, tanpa server dan tanpa API key. Model klasifikasi Naive Bayes dilatih dari contoh balasan berbahasa Indonesia (menerima, bersyarat, menolak), lalu dilengkapi aturan pendeteksi tanda seperti minta maaf berlebihan, alasan panjang, menawarkan alternatif, dan luluh oleh rasa bersalah. AI ini bisa salah membaca kalimat yang ambigu atau sarkas.</p>
+   <p class="note">Cara skor: permintaan wajar tidak dihitung (menolong itu baik). Untuk permintaan setengah wajar dan tidak wajar: menerima = 2, bersyarat = 1, menolak = 0, dikali bobot tingkat keterlaluan. Skor akhir = 60% perilaku di chat + 40% kuesioner.</p>
+  </div>
+ </div>
+</section>
+
+<script>
+{
+/* ===== AI lokal: Naive Bayes + deteksi tanda (tanpa API key) ===== */
+const TRAIN={
+ terima:["iya boleh","oke siap","boleh banget","gas","iya nanti aku bantu","siap nanti aku absenin","boleh kok santai aja","oke nanti kutransfer","iya gapapa aku aja","bisa bisa","tenang aja aku urus","yaudah sini aku kerjain","oke aku jemput","ya ampun boleh lah","sip nanti kukirim","iya deh","oke deh gapapa","boleh kapan","iya aku bantuin","pasti bisa kok","yaudah deh aku bantu","oke aku yang presentasi","iya nanti aku ke stasiun","boleh ambil aja","santai pake aja","siap laksanakan","oke sabtu aku dateng","iya aku pinjemin","boleh nih login aja","yaudah aku transfer sekarang","bisa deh","bisa kok","bisa banget","aman bisa","boleh deh"],
+ syarat:["boleh tapi minggu depan diganti ya","bisa sih asal jangan sering sering","boleh tapi aku cuma bisa sampai jam 9","oke tapi kamu yang traktir","aku bantu sebagian aja ya","bisa kalau kamu kerjain bagian lain","boleh tapi ini terakhir ya","kalau sempet ya nggak janji","aku bantu setengah hari aja","boleh tapi ganti bensin","aku bisa kasih 20 ribu aja","aku ajarin caranya aja ya bukan aku yang kerjain","boleh asal kamu ganti tepat waktu","bisa tapi nanti gantian bantu aku","oke tapi lain kali bilang dari jauh hari","kalau cuma sebentar sih bisa","aku bisanya pagi doang","boleh tapi aku cek jadwal dulu","mungkin bisa tapi nggak janji","aku temenin aja tapi nggak angkat barang","boleh tapi yang kemarin dibalikin dulu","aku bantu bikin kerangka aja","bisa kalau aku udah pulang kerja","nanti aku kabarin ya bisa atau nggak","hmm kayaknya bisa deh","aku pikir dulu ya","nanti aku pikirin dulu","aku cek dulu ya","belum tahu nanti kukabari","mungkin bisa ya","bisa sih kayaknya","kayaknya bisa tapi liat nanti","duh mungkin bisa","oke tapi kamu yang presentasi bagian penutup"],
+ tolak:["maaf nggak bisa","nggak bisa","sorry aku nggak bisa","nggak ah","aduh maaf aku lagi bokek","nggak itu curang","maaf ya aku nggak mau","nggak bisa aku ada acara","nggak dulu deh","maaf aku juga lagi sibuk","tidak itu melanggar aturan","aku nggak nyaman titip absen","nggak kerjain sendiri ya","ogah","maaf banget aku nggak bisa jemput","nggak bisa yang kemarin aja belum diganti","aku nggak bisa bantu kali ini","no","nggak bisa bro","sorry akun ujian nggak bisa dipinjem","maaf tetap nggak bisa","nggak deh aku capek","aku nggak mau bohongin dosen","maaf aku nggak minjemin uang","nggak itu bagian kamu","maaf sabtu aku ada kerja","tetap nggak ya","aku pass dulu","nggak dulu ya kali ini","maaf aku nggak bisa presentasiin bagianmu"]
+};
+const NORM={gak:"nggak",ga:"nggak",ngga:"nggak",enggak:"nggak",engga:"nggak",kaga:"nggak",gk:"nggak",tdk:"nggak",tidak:"nggak",nda:"nggak",ndak:"nggak",nope:"no",gpp:"gapapa","ga-papa":"gapapa",gw:"aku",gue:"aku",aq:"aku",saya:"aku",bs:"bisa",tp:"tapi",tpi:"tapi",tapii:"tapi",ok:"oke",okay:"oke",okee:"oke",oce:"oke",yoi:"oke",sip:"oke",siap:"oke",yaudah:"yaudah",yaudh:"yaudah",udh:"udah",sdh:"udah",sory:"sorry",sori:"sorry",maap:"maaf",mf:"maaf",bgt:"banget",jg:"juga",dlu:"dulu",dl:"dulu",kmu:"kamu",km:"kamu",lu:"kamu",lo:"kamu",yg:"yang",klo:"kalau",kalo:"kalau",asalkan:"asal",y:"ya",yaa:"ya",iyaa:"iya",iyap:"iya",yup:"iya",yes:"iya",yo:"iya"};
+const tok=s=>{const w=s.toLowerCase().replace(/\b(ga|gak|nggak|ngga|g)bisa\b/g,"nggak bisa").replace(/\bgbs\b/g,"nggak bisa").replace(/[^a-z0-9\s-]/g," ").split(/\s+/).filter(Boolean).map(x=>NORM[x]||x);const out=[...w];for(let k=0;k<w.length-1;k++)out.push(w[k]+"_"+w[k+1]);return out};
+const NB=(()=>{const m={},V=new Set();for(const c in TRAIN){m[c]={n:0,f:{}};TRAIN[c].forEach(s=>tok(s).forEach(t=>{m[c].f[t]=(m[c].f[t]||0)+1;m[c].n++;V.add(t)}))}
+ return s=>{const ts=tok(s),lp={};for(const c in m){let p=Math.log(1/3);ts.forEach(t=>{p+=Math.log(((m[c].f[t]||0)+1)/(m[c].n+V.size))});lp[c]=p}
+  const mx=Math.max(...Object.values(lp)),ex={};let z=0;for(const c in lp){ex[c]=Math.exp(lp[c]-mx);z+=ex[c]}for(const c in ex)ex[c]/=z;return ex}})();
+const cnt=(re,s)=>(s.match(re)||[]).length;
+function analyze(text,req,meta){
+ const s=text.toLowerCase().replace(/\b(ga|gak|nggak|ngga|g)bisa\b/g,"nggak bisa"),p=NB(text);
+ /* aturan penguat: kata kunci tegas mengoreksi model */
+ if(/\b(nggak|gak|ga|ngga|enggak|tidak|ogah|no)\b.*\b(bisa|mau|dulu|deh|ah|ya)\b|\b(pass|ogah)\b/.test(s)&&!/\btapi\b/.test(s))p.tolak+=.5;
+ if(/\b(tapi|asal|asalkan|kalau|kecuali|setengah|sebagian|cuma bisa|nggak janji)\b/.test(s)&&!/^(maaf|sorry)?\s*(nggak|gak|ga|tidak)\b/.test(s))p.syarat+=.35;
+ const z=p.terima+p.syarat+p.tolak;for(const c in p)p[c]/=z;
+ const stance=Object.keys(p).sort((a,b)=>p[b]-p[a])[0],conf=p[stance];
+ const words=s.split(/\s+/).filter(Boolean).length,maaf=cnt(/\b(maaf|maap|sorry|sori|mf)\b/g,s);
+ const sig=[],say=[];
+ if(maaf>=2){sig.push("minta maaf berlebihan");say.push("Ada "+maaf+" kata maaf. Minta maaf berulang sering menandakan rasa bersalah saat menolak, padahal menolak bukan kesalahan.")}
+ else if(maaf===1&&stance==="tolak"){sig.push("menolak dengan sopan");say.push("Satu kata maaf cukup: sopan tanpa terdengar merasa bersalah.")}
+ if(stance!=="terima"&&words>=18&&/\b(soalnya|karena|karna|habisnya|abisnya|lagian|sebenernya|sebenarnya)\b/.test(s)){sig.push("alasan panjang");say.push("Kamu menjelaskan alasan cukup panjang ("+words+" kata). Orang yang sulit menolak sering merasa penolakan harus dibenarkan dulu.")}
+ if(/\b(lain kali|gimana kalau|gmn kalau|aku bisanya|aku bantu .* aja|ajarin|kerangka|temenin)\b/.test(s)){sig.push("menawarkan alternatif");say.push("Kamu menawarkan jalan lain. Ini cara menjaga hubungan tanpa mengorbankan diri.")}
+ if(stance==="tolak"&&words<=6&&maaf===0){sig.push("menolak tegas");say.push("Penolakanmu singkat dan langsung, tanpa pembenaran. Itu ciri asertif.")}
+ if(/\b(curang|melanggar|nggak etis|aturan|nggak nyaman|bohong)\b/.test(s)){sig.push("menetapkan batas nilai");say.push("Kamu menyebut alasan nilai atau aturan. Batas seperti ini paling sulit digeser orang lain.")}
+ if(/\b(hmm+|duh|aduh|eh|kayaknya|mungkin|sepertinya|bingung)\b/.test(s)){sig.push("ragu");say.push("Ada kata-kata ragu (hmm, kayaknya, mungkin). Jawaban yang menggantung sering dibaca orang lain sebagai \"masih bisa dibujuk\".")}
+ if(/\b(ogah|males|apaan|ngapain|enak aja)\b/.test(s)){sig.push("nada ketus");say.push("Nadamu cukup ketus. Batasnya jelas, tapi bisa memicu konflik. Menolak tetap bisa hangat.")}
+ if(meta.pressure&&stance==="terima"){sig.push("luluh oleh rasa bersalah");say.push("Kamu berubah jadi menerima setelah Raka membuatmu merasa bersalah. Di titik inilah batasmu paling mudah bergeser.")}
+ if(meta.first>6){sig.push("lama sebelum mengetik");say.push("Kamu butuh "+meta.first.toFixed(1)+" detik sebelum mulai mengetik.")}
+ if(meta.del>=12){sig.push("banyak menghapus");say.push("Kamu menghapus "+meta.del+" karakter sebelum mengirim, tanda sedang menimbang kata.")}
+ let head;
+ const lv=req.c;
+ if(stance==="terima")head=lv===0?"Kamu langsung membantu. Untuk permintaan wajar seperti ini, itu sehat dan tidak dihitung sebagai people-pleasing.":lv===3?"Kamu menuruti permintaan yang melanggar aturan akademik. Ini tanda batas yang sangat mudah ditembus.":"Kamu menuruti permintaan yang sebenarnya merugikanmu (tingkat keterlaluan "+lv+" dari 3).";
+ else if(stance==="syarat")head="Kamu membantu dengan syarat. Ini kompromi: ada batas, tapi masih bisa ditawar.";
+ else head=lv===0?"Kamu menolak permintaan yang wajar. Tidak salah. Perhatikan saja apakah itu karena memang tidak bisa atau karena kebiasaan.":"Kamu menolak. Batasmu terjaga.";
+ return{stance,conf,score:stance==="terima"?2:stance==="syarat"?1:0,sig,text:[head,...say].join(" "),words,maaf};
+}
+
+/* ===== Data tes ===== */
+const R=[
+ {t:"Eh, boleh pinjam pulpen bentar? Punyaku ketinggalan",c:0,qa:{why:"Ketinggalan di kos, tadi buru-buru banget berangkatnya",when:"Sekarang, dosennya udah masuk nih",how:"Lempar aja ke mejaku, aku duduk di belakangmu"}},
+ {t:"Bisa kirimin catatan kuliah minggu lalu? Aku nggak masuk",c:0,qa:{why:"Iya, aku sakit, demam dua hari. Sekarang udah mendingan kok",when:"Malam ini kalau bisa, besok ada kuis",how:"Foto aja terus kirim lewat chat, nggak usah dirapihin"}},
+ {t:"Titip absen dong nanti, aku telat dikit",c:1,qa:{why:"Kesiangan, semalem begadang ngerjain tugas",when:"Kelas jam 1 nanti",how:"Tinggal tanda tangan namaku di kertas absen, dosennya nggak bakal ngecek kok",amt:"Paling telat 30 menit lah"}},
+ {t:"Pinjam 50 ribu ya, minggu depan kuganti kok",c:1,qa:{why:"Buat makan sama ongkos ojol, uang bulananku belum turun",when:"Senin depan kuganti, janji",how:"Transfer aja ke rekeningku, nanti kukirim nomornya",amt:"50 ribu aja kok, nggak lebih"}},
+ {t:"Nanti kamu aja ya yang presentasiin bagianku, aku belum siap",c:2,p:"Yah… padahal aku lagi pusing banget. Kukira kamu bisa diandalkan",qa:{why:"Semalem aku kerja shift, belum sempat baca materinya sama sekali",when:"Besok pagi jam 8",how:"Slide-nya udah ada kok, kamu tinggal ngomong aja",amt:"Bagianku cuma 5 slide"}},
+ {t:"Jemput aku di stasiun dong, jam 11 malam. Agak jauh sih dari rumahmu",c:2,qa:{why:"Keretanya telat terus ojol jam segitu mahal banget",when:"Jam 11 malam ini",where:"Stasiun Tanah Abang, sekitar 40 menit dari rumahmu",how:"Pakai motormu aja, aku bawa helm"}},
+ {t:"Tolong kerjain bagianku di tugas kelompok ya, aku sibuk kerja minggu ini",c:2,p:"Serius? Aku kira kita teman. Aku pasti bantu kamu kalau gantian",qa:{why:"Minggu ini aku lembur tiap hari, pulang jam 10 malam terus",when:"Deadline-nya Jumat",how:"Bagianku analisis data, kamu kan jago itu",amt:"Paling 3 halaman doang"}},
+ {t:"Pinjam 50 ribu lagi ya, yang kemarin nanti sekalian aku ganti",c:2,qa:{why:"Yang kemarin udah habis buat ojol, sekarang buat makan",when:"Nanti sekalian awal bulan ya",amt:"50 lagi, jadi total 100"}},
+ {t:"Sabtu bantu aku pindahan seharian ya. Kamu kan nggak ngapa-ngapain",c:2,p:"Ya ampun, cuma sehari doang. Yang lain pada nggak bisa, cuma kamu harapanku",qa:{why:"Kontrakanku habis, Sabtu harus udah keluar",when:"Dari jam 7 pagi sampai sore",where:"Dari Kemanggisan ke Tangerang",how:"Angkat-angkat barang sama nyetir mobil bak sewaan"}},
+ {t:"Boleh pinjam akun ujian online-mu? Aku cuma mau lihat soalnya",c:3,qa:{why:"Cuma mau lihat bentuk soalnya kok, biar nggak kaget",when:"Malam ini, ujiannya besok",how:"Kasih aja username sama password-nya, nanti langsung kuganti lagi"}}
+];
+const REPLY={terima:["Makasih banyak!","Kamu emang the best","Asik, makasih ya","Wah, penyelamat banget kamu"],syarat:["Oke deh, gitu juga boleh","Hmm, oke, makasih ya","Yaudah gapapa, segitu juga udah ngebantu"],tolak:["Oh, oke deh","Yaudah, gapapa","Hmm… oke","Oh gitu ya. Yaudah aku cari yang lain"]};
+const LBL={terima:"Menerima",syarat:"Bersyarat",tolak:"Menolak",tanya:"Bertanya dulu",kabur:"Belum jelas"};
+const QRE=/\?|\b(kenapa|knp|kok|emang|emangnya|buat apa|untuk apa|ngapain|kapan|jam berapa|berapa|brp|dimana|di mana|dmn|kemana|ke mana|darimana|dari mana|gimana|gmn|bagaimana|caranya|sakit|serius|beneran|siapa|apa)\b/;
+const ANS=/^(iya|iyaa|iyap|boleh|oke|ok|okay|siap|sip|gas|bisa|nggak|gak|ga|ngga|enggak|gabisa|tidak|maaf|sorry|sori|ogah|no|yaudah|yuk|ayo)\b/;
+const DEC=/\b(iya|boleh|oke|ok|siap|bisa|gas|sip|nggak|gak|ga|ngga|enggak|gabisa|tidak|ogah|maaf|sorry|tapi|asal|pinjemin|transfer|kerjain|jemput|bantu)\b/;
+const intentOf=(v,a)=>{const s=v.toLowerCase().trim();
+ if(QRE.test(s)&&!ANS.test(s))return"tanya";
+ if(/^(halo|hai|hi|hey|p|woi|oi|bro|sis|eh)\b[\s!.?]*$/.test(s))return"kabur";
+ if(a.conf<.55&&!DEC.test(s))return"kabur";
+ return"putus"};
+const topic=s=>{s=s.toLowerCase();return/\b(kapan|jam|lama|sampai)\b/.test(s)?"when":/\b(berapa|brp|banyak)\b/.test(s)?"amt":/\b(mana|dmn|jauh)\b/.test(s)?"where":/\b(gimana|gmn|bagaimana|cara|caranya)\b/.test(s)?"how":"why"};
+const NUDGE=["Jadi gimana, bisa?","Nah gitu. Jadi bisa nggak?","Gimana, mau bantu?","Jadi…?"];
+const analyzeOther=(kind,meta,n)=>{const say=[],sig=[];
+ if(kind==="tanya"){sig.push("bertanya dulu");say.push(n>1?"Kamu bertanya lagi sebelum memutuskan. Mengumpulkan informasi dulu menandakan kamu menimbang, tidak otomatis mengiyakan.":"Kamu bertanya dulu sebelum menjawab. Ini tanda menimbang: kamu tidak otomatis mengiyakan. Keputusanmu belum dihitung.")}
+ else{sig.push("belum memutuskan");say.push("Balasanmu belum menunjukkan keputusan, jadi belum dihitung. Menggantung jawaban kadang jadi cara menghindari menolak secara langsung.")}
+ if(meta.first>6){sig.push("lama sebelum mengetik");say.push("Kamu butuh "+meta.first.toFixed(1)+" detik sebelum mulai mengetik.")}
+ if(meta.del>=12){sig.push("banyak menghapus");say.push("Kamu menghapus "+meta.del+" karakter sebelum mengirim.")}
+ return{stance:kind,conf:1,score:null,sig,text:say.join(" "),maaf:0}};
+const LQ=[
+ ["Aku merasa bersalah lama setelah menolak permintaan orang.",0],
+ ["Kebutuhanku sering kutunda demi orang lain, walau aku sedang capek.",0],
+ ["Kalau orang lain kecewa padaku, aku ikut kepikiran seharian.",0],
+ ["Aku lebih sering bilang \"iya\" duluan, baru mikir belakangan.",0],
+ ["Aku merasa harus terus berguna supaya orang tetap suka padaku.",0],
+ ["Aku bisa menolak tanpa perlu memberi alasan panjang.",1]
+];
+const $=id=>document.getElementById(id);
+const scr=$("scr");
+let S,i,lk,busy=false;
+const reset=()=>{S={ans:[],cave:0,press:0,log:[],qs:0};lk=Array(LQ.length).fill(0);i=0};
+const intro=()=>{reset();$("res").classList.remove("on");scr.innerHTML='<div class="start"><div class="av" style="margin:0 auto;width:64px;height:64px;font-size:26px">R</div><h2>Raka</h2><p>Teman sekelasmu. Akrab, sering minta tolong. Balas chat-nya dengan mengetik sendiri.</p><button class="btn" id="go">Mulai chat</button></div>';$("go").onclick=chat};
+const chat=()=>{scr.innerHTML='<div class="bar"><div class="av">R</div><div><b>Raka</b><small>online</small></div><span class="prog" id="pg"></span></div><div class="chat" id="ch"></div><form class="inbar" id="fm"><textarea id="tx" rows="1" placeholder="Ketik balasanmu…" aria-label="Balasan untuk Raka" disabled></textarea><button class="send" id="sd" aria-label="Kirim" disabled>➤</button></form>';
+ const tx=$("tx");let prev=0;
+ tx.addEventListener("input",()=>{if(M.first<0)M.first=(performance.now()-M.t0)/1000;const L=tx.value.length;if(L<prev)M.del+=prev-L;prev=L;tx.style.height="auto";tx.style.height=Math.min(tx.scrollHeight,120)+"px";$("sd").disabled=tx.value.trim().length<1});
+ tx.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();$("fm").requestSubmit()}});
+ $("fm").addEventListener("submit",e=>{e.preventDefault();const v=tx.value.trim();if(!v||busy)return;tx.value="";prev=0;tx.style.height="auto";$("sd").disabled=true;lock(true);onSend&&onSend(v)});
+ next()};
+let M={t0:0,first:-1,del:0},onSend=null;
+const lock=b=>{busy=b;$("tx").disabled=b;if(!b){$("tx").focus({preventScroll:true})}};
+const ask=fn=>{M={t0:performance.now(),first:-1,del:0};onSend=v=>{add(v,"me");fn(v,{...M,first:M.first<0?0:M.first})};lock(false)};
+const add=(txt,cls)=>{const ch=$("ch"),d=document.createElement("div");d.className="msg "+cls;d.textContent=txt;ch.appendChild(d);ch.scrollTop=ch.scrollHeight;return d};
+const aiCard=(a,cb)=>{const ch=$("ch"),d=document.createElement("div");d.className="ai";d.innerHTML='<b>Analisis AI</b><span>Menganalisis jawabanmu…</span>';ch.appendChild(d);ch.scrollTop=ch.scrollHeight;
+ setTimeout(()=>{d.innerHTML='<b></b><span></span><div class="chips"></div>';d.querySelector("b").textContent="Analisis AI · "+LBL[a.stance]+(a.score==null?"":" ("+Math.round(a.conf*100)+"% yakin)");d.querySelector("span").textContent=a.text;d.querySelector(".chips").innerHTML=a.sig.map(()=>"<span></span>").join("");d.querySelectorAll(".chips span").forEach((x,k)=>x.textContent=a.sig[k]);ch.scrollTop=ch.scrollHeight;cb()},650)};
+const typing=cb=>{const ch=$("ch"),d=document.createElement("div");d.className="typing";d.textContent="Raka sedang mengetik…";ch.appendChild(d);ch.scrollTop=ch.scrollHeight;setTimeout(()=>{d.remove();cb()},700+Math.random()*500)};
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+const converse=(r,pressure,done)=>{let turns=0;const loop=()=>ask((v,m)=>{
+ const a0=analyze(v,r,{...m,pressure});
+ const kind=turns>=3?"putus":intentOf(v,a0);
+ if(kind==="putus"){S.log.push({lv:r.c,ans:v,a:a0,m,pressure});aiCard(a0,()=>done(a0));return}
+ turns++;if(kind==="tanya")S.qs++;
+ const o=analyzeOther(kind,m,turns);S.log.push({lv:r.c,ans:v,a:o,m,pressure,other:true});
+ aiCard(o,()=>typing(()=>{
+  if(kind==="tanya"){add(r.qa[topic(v)]||r.qa.why,"them");setTimeout(()=>typing(()=>{add(turns>=3?"Udah ah, intinya bisa atau nggak?":pick(NUDGE),"them");loop()}),250)}
+  else{add(turns>=3?"Udah ah, intinya bisa atau nggak?":pick(["Maksudnya bisa atau nggak nih?","Hehe, jadi gimana? Bisa bantu?","Eh, jadi mau atau nggak?"]),"them");loop()}
+ }));
+});loop()};
+const react=(a,pressure)=>{if(pressure)return a.stance==="terima"?pick(["Nah gitu dong, makasih ya","Makasih, kamu emang baik"]):pick(["Hmm, oke","Yaudah deh","Oh… oke"]);if(a.stance==="syarat"&&a.sig.includes("menawarkan alternatif"))return"Oh boleh juga gitu, oke makasih";return pick(REPLY[a.stance])};
+const next=()=>{
+ if(i>=R.length){typing(()=>{add("Udah dulu ya, makasih udah bales chatku","them");setTimeout(survey,1200)});return}
+ $("pg").textContent="Permintaan "+(i+1)+"/"+R.length;
+ const r=R[i];
+ typing(()=>{add(r.t,"them");converse(r,false,a=>{
+  if(r.p&&a.stance!=="terima"){S.press++;typing(()=>{add(r.p,"them");converse(r,true,b=>{
+   if(b.stance==="terima")S.cave++;S.ans.push({c:r.c,v:b.stance==="terima"?2:a.score});
+   typing(()=>{add(react(b,true),"them");i++;next()})})})}
+  else{S.ans.push({c:r.c,v:a.score});typing(()=>{add(react(a,false),"them");i++;next()})}
+ })});
+};
+const survey=()=>{
+ scr.innerHTML='<div class="bar"><div class="av">?</div><div><b>Bagian 2</b><small>Seberapa sesuai dengan dirimu?</small></div></div><div class="likert">'+LQ.map((q,k)=>'<div class="q"><p>'+(k+1)+'. '+q[0]+'</p><div class="sc" data-q="'+k+'">'+[1,2,3,4,5].map(n=>'<button aria-pressed="false" data-n="'+n+'">'+n+'</button>').join('')+'</div><div class="scl"><span>Tidak sesuai</span><span>Sangat sesuai</span></div></div>').join('')+'<button class="btn" id="fin" disabled style="width:100%;opacity:.5">Lihat hasil</button></div>';
+ scr.querySelectorAll(".sc").forEach(g=>g.querySelectorAll("button").forEach(b=>b.onclick=()=>{
+  const q=+g.dataset.q;lk[q]=+b.dataset.n;g.querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x===b));
+  const ok=lk.every(x=>x>0),f=$("fin");f.disabled=!ok;f.style.opacity=ok?1:.5}));
+ $("fin").onclick=result;
+};
+const med=a=>{if(!a.length)return null;const s=[...a].sort((x,y)=>x-y),m=s.length>>1;return s.length%2?s[m]:(s[m-1]+s[m])/2};
+const result=()=>{
+ let num=0,den=0;S.ans.forEach(a=>{if(a.c>0){num+=a.c*a.v;den+=a.c*2}});
+ const comp=Math.round(num/den*100);
+ const self=Math.round(lk.reduce((s,v,k)=>s+((LQ[k][1]?6-v:v)-1),0)/(LQ.length*4)*100);
+ const cave=S.press?Math.round(S.cave/S.press*100):0;
+ const total=Math.round(.6*comp+.4*self);
+ const firstNo=S.ans.findIndex(a=>a.v===0);
+ const main=S.log.filter(l=>!l.pressure&&!l.other);
+ const firstKey=med(main.map(l=>l.m.first)),dels=main.reduce((s,l)=>s+l.m.del,0);
+ const allSig={};S.log.forEach(l=>l.a.sig.forEach(g=>allSig[g]=(allSig[g]||0)+1));
+ const topSig=Object.entries(allSig).sort((a,b)=>b[1]-a[1]).slice(0,3);
+ const maafTot=S.log.reduce((s,l)=>s+l.a.maaf,0);
+ let type,desc;
+ if(total<35){type="Si Tahu Batas";desc="Kamu menolong saat wajar dan berani menolak saat permintaan mulai merugikanmu. Rasa bersalah tidak banyak menyetir keputusanmu."}
+ else if(total<65){type="Si Penengah";desc="Kamu sering mencari jalan tengah: membantu dengan syarat, atau menolak tapi masih kepikiran. Momen ketika kamu dibuat merasa bersalah adalah titik batasmu paling mudah bergeser."}
+ else{type="Si Iya-Iya Aja";desc="Kamu cenderung mendahulukan orang lain bahkan saat permintaannya sudah merugikanmu. Dalam riset, pola mengabaikan diri demi orang lain ini berkaitan dengan distres."}
+ $("res").classList.add("on");
+ $("rScore").textContent=total;$("rType").textContent=type;$("rDesc").textContent=desc;
+ requestAnimationFrame(()=>$("rBar").style.width=total+"%");
+ const rows=[
+  ["Kepatuhan pada permintaan tidak wajar",comp+"%",comp,"Dihitung dari klasifikasi AI atas setiap balasan yang kamu ketik."],
+  ["Luluh saat dibuat merasa bersalah",S.press?(S.cave+" dari "+S.press):"tidak muncul",cave,"Raka memberi tekanan setelah kamu menolak atau memberi syarat."],
+  ["Kecenderungan mengabaikan diri (kuesioner)",self+"%",self,"Konstruk unmitigated communion: rasa bersalah, menunda kebutuhan sendiri, ikut terbebani."],
+  ["Penolakan pertama",firstNo<0?"tidak pernah":"permintaan ke-"+(firstNo+1),firstNo<0?100:Math.round(firstNo/(R.length-1)*100),"Makin belakang, makin jauh batasmu bisa didorong."],
+  ["Jeda sebelum mengetik",firstKey==null?"-":firstKey.toFixed(1)+" dtk",Math.min(100,Math.round((firstKey||0)/10*100)),"Median waktu sampai kamu mulai mengetik. Indikator eksploratif, tanpa norma baku."]
+ ];
+ $("rRows").innerHTML=rows.map(r=>'<div class="row"><div class="lab">'+r[0]+'<span>'+r[1]+'</span></div><div class="m"><i style="width:'+r[2]+'%"></i></div><p>'+r[3]+'</p></div>').join('');
+ /* ringkasan AI keseluruhan */
+ const P=[];
+ const cmp=S.log.filter(l=>!l.pressure&&l.lv>=2&&l.a.stance==="terima").length;
+ P.push("Dari "+main.length+" balasan, AI mengklasifikasikan "+main.filter(l=>l.a.stance==="terima").length+" menerima, "+main.filter(l=>l.a.stance==="syarat").length+" bersyarat, dan "+main.filter(l=>l.a.stance==="tolak").length+" menolak. Untuk permintaan yang jelas merugikan (tingkat 2–3), kamu menerima "+cmp+" kali.");
+ P.push(firstNo<0?"Kamu tidak pernah menolak sepenuhnya. Pola ini sejalan dengan efek foot-in-the-door: setelah mengiyakan yang kecil, yang besar terasa makin sulit ditolak.":"Penolakan pertamamu muncul di permintaan ke-"+(firstNo+1)+(firstNo>=4?", cukup belakang. Batasmu baru muncul setelah beberapa kali mengiyakan, khas efek foot-in-the-door.":", cukup awal. Kamu tidak terlalu terseret oleh permintaan-permintaan kecil sebelumnya."));
+ if(S.press)P.push(S.cave?"Saat Raka membuatmu merasa bersalah, kamu luluh "+S.cave+" dari "+S.press+" kali. Rasa bersalah adalah tuas utama yang menggeser batasmu.":"Saat Raka membuatmu merasa bersalah, kamu tetap pada keputusanmu. Ini tanda asertivitas yang kuat.");
+ if(S.qs)P.push("Kamu bertanya "+S.qs+" kali sebelum memutuskan. Mencari informasi dulu membantu kamu menilai apakah permintaan itu wajar, bukan langsung mengiyakan.");
+ if(topSig.length)P.push("Tanda yang paling sering muncul di kata-katamu: "+topSig.map(x=>x[0]+" ("+x[1]+"x)").join(", ")+"."+(maafTot>=5?" Total kamu menulis "+maafTot+" kata maaf. Coba perhatikan apakah maaf itu memang perlu.":""));
+ P.push(total>=65?"Saran latihan: tolak satu permintaan kecil per minggu dengan kalimat singkat tanpa alasan panjang, misalnya \"Maaf, kali ini aku nggak bisa.\" Pelatihan asertivitas adalah intervensi berbasis bukti.":total>=35?"Saran latihan: saat merasa dibuat bersalah, beri jeda dulu (\"aku pikir dulu ya\") sebelum menjawab. Keputusan yang diambil di bawah rasa bersalah jarang mencerminkan batasmu yang sebenarnya.":"Saran: pertahankan, dan jaga supaya penolakanmu tetap hangat. Menawarkan alternatif adalah cara bagus melakukannya.");
+ $("rSum").innerHTML=P.map(()=>"<p></p>").join("");$("rSum").querySelectorAll("p").forEach((p,k)=>p.textContent=P[k]);
+ scr.innerHTML='<div class="start"><h2>Selesai</h2><p>Hasil dan analisis AI ada di bawah.</p><button class="btn alt" id="see">Lihat hasil</button></div>';
+ $("see").onclick=()=>$("res").scrollIntoView({behavior:"smooth"});
+ $("res").scrollIntoView({behavior:"smooth"});
+ $("copy").onclick=async()=>{const txt="People-Pleaser Detector: skor "+total+"/100 ("+type+"). Kepatuhan pada permintaan tidak wajar "+comp+"%, kuesioner "+self+"%.";try{await navigator.clipboard.writeText(txt);$("copied").textContent="Hasil disalin."}catch(e){$("copied").textContent=txt}};
+};
+$("again").onclick=()=>{intro();scr.scrollIntoView({behavior:"smooth"})};
+intro();
+}
+</script>
+</body>
+</html>
