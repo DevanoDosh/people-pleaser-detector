@@ -194,6 +194,38 @@ section{position:relative;z-index:1}
 .steps b{box-shadow:0 0 12px rgba(212,175,55,.5)}
 .av{box-shadow:0 0 14px rgba(212,175,55,.5)}
 @media(prefers-reduced-motion:reduce){.wgo{opacity:1}.shine,.wt,.btn,.btn::after,.phone::before,.ai.busy{animation:none}.rv{opacity:1;transform:none;transition:none}#dust,.spot{display:none}}
+/* ===== Laporan hasil ===== */
+.rep{position:fixed;inset:0;z-index:60;background:rgba(5,4,3,.86);backdrop-filter:blur(6px);display:none;overflow:auto;padding:24px 16px}
+.rep.on{display:block;animation:fadein .4s ease}
+@keyframes fadein{from{opacity:0}to{opacity:1}}
+.rep-in{max-width:760px;margin:0 auto;background:linear-gradient(170deg,#1b1810,#0d0c09);border:1px solid #4a3f1f;border-radius:26px;padding:clamp(20px,4vw,40px);box-shadow:0 0 60px rgba(212,175,55,.15);animation:rise .6s cubic-bezier(.2,.8,.2,1)}
+@keyframes rise{from{transform:translateY(40px) scale(.97);opacity:0}to{transform:none;opacity:1}}
+.rep-h{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;flex-wrap:wrap}
+.rep-h small{color:var(--gold);font-weight:800}
+.rep h2{font-size:clamp(28px,5vw,40px);margin:4px 0 0;color:var(--gold2)}
+.rep h3{font-family:"Playfair Display",Georgia,serif;font-size:20px;margin:26px 0 10px;color:var(--gold2)}
+.gauge{width:130px;height:130px;flex:none;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--gold2) calc(var(--v)*1%),#2c271d 0);box-shadow:0 0 30px rgba(212,175,55,.3)}
+.gauge span{width:100px;height:100px;border-radius:50%;background:#100e0b;display:grid;place-items:center;font:800 34px/1 "Playfair Display",Georgia,serif;color:var(--gold2)}
+.rep-desc{margin:14px 0 0;color:var(--ink)}
+.asp{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.asp div{background:#14120d;border:1px solid #2c271d;border-radius:14px;padding:12px}
+.asp b{display:block;font-size:14px}
+.asp .lv{display:inline-block;margin-top:6px;border-radius:99px;padding:2px 10px;font-size:13px;font-weight:800}
+.lv.r{background:#1d2a17;color:#a7e08a}.lv.s{background:#2e2714;color:var(--gold2)}.lv.t{background:#3a1717;color:#ff9c8a}
+.asp .val{float:right;color:var(--mut);font-size:13px;white-space:nowrap}
+.rep ul{margin:0;padding-left:20px}.rep li{margin-bottom:6px}
+.plan{counter-reset:d;list-style:none;padding:0!important}
+.plan li{display:flex;gap:10px;align-items:baseline}
+.plan li::before{counter-increment:d;content:"Hari " counter(d);flex:none;font-weight:800;color:var(--gold);font-size:13px;width:52px}
+.tl{display:grid;gap:6px}
+.tl div{display:flex;justify-content:space-between;gap:10px;border-bottom:1px solid #2c271d;padding:6px 0;font-size:14px}
+.tl span:first-child{color:var(--mut)}
+.tl em{font-style:normal;font-weight:800;white-space:nowrap}
+.tl .terima{color:#ff9c8a}.tl .syarat{color:var(--gold2)}.tl .tolak{color:#a7e08a}
+.rep .warn{margin-top:20px}
+.rep-acts{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+@media(max-width:560px){.asp{grid-template-columns:minmax(0,1fr)}.gauge{width:110px;height:110px}.gauge span{width:84px;height:84px;font-size:28px}}
+@media print{body>*:not(.rep){display:none!important}.rep{position:static;display:block;background:#fff;padding:0}.rep-in{box-shadow:none;border:0;background:#fff;color:#111}.rep *{color:#111!important}.rep-acts{display:none}.gauge span{background:#fff}}
 body.lock{overflow:hidden}
 @media(prefers-reduced-motion:reduce){.wt,.wsub,.wb,.wgo,.wnote,.ph3d,.sway,.fl{animation:none;opacity:1}.wb{transform:translateZ(var(--z,30px))}.wel,.stage{transition:none}}
 @media(max-width:760px){.wel-in{grid-template-columns:minmax(0,1fr);gap:18px}.wtext{justify-items:center;text-align:center}.wtext .wgo,.wtext .wnote{display:none}.wfoot{display:grid!important}.scr3d{min-height:0}.wb{font-size:calc(var(--s,14px) - 1px)}.fl.hide-m{display:none}}
@@ -230,6 +262,7 @@ body.lock{overflow:hidden}
  </div>
 </div>
 <canvas id="dust" aria-hidden="true"></canvas><div class="spot" aria-hidden="true"></div><div class="bgw" id="bgw" aria-hidden="true"></div>
+<div class="rep" id="rep" role="dialog" aria-modal="true" aria-labelledby="repT"><div class="rep-in" id="repIn"></div></div>
 <section class="band top">
  <div class="wrap">
   <div>
@@ -271,7 +304,7 @@ body.lock{overflow:hidden}
    <div class="meter"><i id="rBar" style="width:0"></i></div>
    <p><span class="tag" id="rType"></span></p>
    <p id="rDesc"></p>
-   <div class="acts"><button class="btn" id="copy">Salin hasil</button><button class="btn ghost" id="again">Ulangi tes</button></div>
+   <div class="acts"><button class="btn" id="reopen">Lihat laporan lengkap</button><button class="btn ghost" id="copy">Salin hasil</button><button class="btn ghost" id="again">Ulangi tes</button></div>
    <p class="note" id="copied" aria-live="polite"></p>
    <div class="sum rv"><h2>Analisis AI keseluruhan</h2><div id="rSum"></div></div>
   </div>
@@ -449,7 +482,7 @@ const converse=(r,pressure,done)=>{let turns=0;const loop=()=>ask(async(v,m)=>{
  const cd=aiStart();const ep=await embProbs(v);
  const a0=analyze(v,r,{...m,pressure},ep);
  const kind=turns>=3?"putus":intentOf(v,a0,ep);
- if(kind==="putus"){S.log.push({lv:r.c,ans:v,a:a0,m,pressure});aiFill(cd,a0,()=>done(a0));return}
+ if(kind==="putus"){S.log.push({lv:r.c,req:r.t,ans:v,a:a0,m,pressure});aiFill(cd,a0,()=>done(a0));return}
  turns++;if(kind==="tanya")S.qs++;
  const o=analyzeOther(kind,m,turns);S.log.push({lv:r.c,ans:v,a:o,m,pressure,other:true});
  aiFill(cd,o,()=>typing(()=>{
@@ -477,6 +510,35 @@ const survey=()=>{
  $("fin").onclick=result;
 };
 const med=a=>{if(!a.length)return null;const s=[...a].sort((x,y)=>x-y),m=s.length>>1;return s.length%2?s[m]:(s[m-1]+s[m])/2};
+
+const esc=t=>String(t).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const lvl=v=>v<35?["Rendah","r"]:v<65?["Sedang","s"]:["Tinggi","t"];
+function showReport(d){
+ const has=g=>S.log.some(l=>l.a.sig.includes(g));
+ const kuat=[];if(S.qs)kuat.push("Kamu menimbang dulu sebelum memutuskan: bertanya "+S.qs+" kali sebelum menjawab.");if(S.press&&!S.cave)kuat.push("Kamu tetap pada keputusanmu meski dibuat merasa bersalah.");if(has("menawarkan alternatif"))kuat.push("Kamu bisa menolak dengan hangat dengan menawarkan jalan lain.");if(has("menetapkan batas nilai"))kuat.push("Kamu punya batas nilai yang jelas, misalnya soal kecurangan.");if(d.comp<35)kuat.push("Kamu berani menolak permintaan yang merugikanmu.");if(!kuat.length)kuat.push("Kamu tetap mau menolong untuk permintaan yang wajar, dan itu sisi baik yang perlu dijaga.");
+ const latih=[];if(d.comp>=50)latih.push("Menolak permintaan yang jelas merugikanmu.");if(S.cave)latih.push("Bertahan saat orang lain membuatmu merasa bersalah.");if(d.maafTot>=5)latih.push("Mengurangi kata maaf saat menolak. Menolak bukan kesalahan.");if(has("alasan panjang"))latih.push("Menolak tanpa harus memberi alasan panjang.");if(has("menolak tidak langsung"))latih.push("Menolak secara langsung, bukan mengalihkan ke orang lain.");if(d.self>=60)latih.push("Memberi ruang untuk kebutuhan dan rasa capekmu sendiri.");if(!latih.length)latih.push("Pertahankan pola ini, dan perhatikan agar penolakanmu tetap hangat.");
+ const plan=d.total>=65?["Perhatikan setiap kali kamu bilang \"iya\" tapi sebenarnya ingin bilang \"nggak\". Catat saja, belum perlu diubah.","Tolak satu permintaan kecil dengan kalimat singkat: \"Maaf, kali ini aku nggak bisa.\"","Saat diminta tolong, jawab dulu \"aku cek dulu ya\", baru putuskan setelah 10 menit.","Ulangi penolakan kecil, kali ini tanpa alasan panjang.","Tulis 3 kebutuhanmu minggu ini yang sering kamu tunda demi orang lain.","Tawarkan alternatif sebagai ganti \"iya\" penuh, misalnya \"aku bantu bagian kecilnya aja\".","Tinjau lagi: penolakan mana yang ternyata tidak membuat hubunganmu rusak?"]
+  :d.total>=35?["Catat momen ketika kamu merasa \"nggak enak\" menolak.","Saat dibuat merasa bersalah, tunda jawabanmu: \"aku pikir dulu ya\".","Tolak satu permintaan yang memang merugikanmu, tanpa minta maaf berulang.","Latih kalimat batas: \"Aku bisa bantu X, tapi nggak bisa Y.\"","Perhatikan siapa yang paling sering membuatmu mengalah.","Ulangi kalimat batas pada orang yang sama.","Tinjau lagi: kapan batasmu bertahan dan kapan bergeser?"]
+  :["Pertahankan kebiasaan menimbang sebelum menjawab.","Saat menolak, sertakan satu kalimat hangat.","Tawarkan alternatif kecil kalau memang mau membantu.","Perhatikan apakah kamu terlalu cepat menolak permintaan yang wajar.","Bantu satu orang tanpa diminta, dengan batas yang kamu tentukan sendiri.","Refleksikan: kapan menolong membuatmu senang, bukan terbebani?","Tinjau lagi keseimbangan antara menolong dan menjaga diri."];
+ const asp=[["Kepatuhan pada permintaan tidak wajar",d.comp],["Luluh saat dibuat merasa bersalah",d.cave],["Kecenderungan mengabaikan diri",d.self],["Batas mudah didorong",d.push]];
+ const tl=S.log.filter(l=>!l.other).map(l=>({t:(l.pressure?"(saat ditekan) ":"")+(R.find(r=>r.c===l.lv&&(l.ans!==undefined))?"":""),q:l.req||"",a:l.a.stance}));
+ const steps=S.log.filter(l=>!l.other);
+ $("repIn").innerHTML='<div class="rep-h"><div><small>Hasil analisis · People-Pleaser Detector</small><h2 id="repT">'+esc(d.type)+'</h2><p class="rep-desc">'+esc(d.desc)+'</p></div><div class="gauge" style="--v:'+d.total+'"><span>'+d.total+'</span></div></div>'
+ +'<h3>Tingkat per aspek</h3><div class="asp">'+asp.map(a=>{const L=lvl(a[1]);return'<div><span class="val">'+a[1]+'/100</span><b>'+esc(a[0])+'</b><span class="lv '+L[1]+'">'+L[0]+'</span></div>'}).join('')+'</div>'
+ +'<h3>Pola utama menurut AI</h3><div>'+d.P.map(x=>'<p>'+esc(x)+'</p>').join('')+'</div>'
+ +'<h3>Kekuatanmu</h3><ul>'+kuat.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul>'
+ +'<h3>Yang perlu dilatih</h3><ul>'+latih.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul>'
+ +'<h3>Rencana latihan 7 hari</h3><ol class="plan">'+plan.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ol>'
+ +'<h3>Rekap jawabanmu</h3><div class="tl">'+steps.map((l,k)=>'<div><span>'+(l.pressure?"Saat ditekan: ":"Permintaan "+(k+1)+": ")+esc(l.ans.length>60?l.ans.slice(0,57)+"…":l.ans)+'</span><em class="'+l.a.stance+'">'+LBL[l.a.stance]+'</em></div>').join('')+'</div>'
+ +'<div class="warn">Ini hasil alat eksplorasi diri yang belum divalidasi secara psikometrik, <b>bukan diagnosis klinis</b>. Kalau kebiasaan mengalah sudah membuatmu tertekan, cemas, atau kelelahan, ngobrol dengan psikolog atau layanan konseling kampus bisa sangat membantu.</div>'
+ +'<div class="rep-acts"><button class="btn" id="repPdf">Simpan PDF</button><button class="btn ghost" id="repCopy">Salin ringkasan</button><button class="btn ghost" id="repX">Tutup</button></div><p class="note" id="repMsg" aria-live="polite"></p>';
+ const rep=$("rep");rep.classList.add("on");document.body.classList.add("lock");rep.scrollTop=0;
+ const close=()=>{rep.classList.remove("on");document.body.classList.remove("lock");$("res").scrollIntoView({behavior:"smooth"})};
+ $("repX").onclick=close;rep.onkeydown=e=>{if(e.key==="Escape")close()};
+ $("repPdf").onclick=()=>{try{window.print()}catch(e){$("repMsg").textContent="Gunakan menu Bagikan/Cetak di browser untuk menyimpan PDF."}};
+ $("repCopy").onclick=async()=>{const t="Hasil People-Pleaser Detector: "+d.type+" ("+d.total+"/100). "+asp.map(a=>a[0]+": "+lvl(a[1])[0]).join("; ")+".";try{await navigator.clipboard.writeText(t);$("repMsg").textContent="Ringkasan disalin."}catch(e){$("repMsg").textContent=t}};
+ $("repX").focus({preventScroll:true});
+}
 const result=()=>{
  let num=0,den=0;S.ans.forEach(a=>{if(a.c>0){num+=a.c*a.v;den+=a.c*2}});
  const comp=Math.round(num/den*100);
@@ -517,6 +579,8 @@ const result=()=>{
  scr.innerHTML='<div class="start"><h2>Selesai</h2><p>Hasil dan analisis AI ada di bawah.</p><button class="btn alt" id="see">Lihat hasil</button></div>';
  $("see").onclick=()=>$("res").scrollIntoView({behavior:"smooth"});
  $("res").scrollIntoView({behavior:"smooth"});
+ const RD={type,desc,total,comp,cave,self,push:firstNo<0?100:Math.round(firstNo/(R.length-1)*100),maafTot,P};$("reopen").onclick=()=>showReport(RD);
+ setTimeout(()=>showReport({type,desc,total,comp,cave,self,push:firstNo<0?100:Math.round(firstNo/(R.length-1)*100),maafTot,P}),700);
  $("copy").onclick=async()=>{const txt="People-Pleaser Detector: skor "+total+"/100 ("+type+"). Kepatuhan pada permintaan tidak wajar "+comp+"%, kuesioner "+self+"%.";try{await navigator.clipboard.writeText(txt);$("copied").textContent="Hasil disalin."}catch(e){$("copied").textContent=txt}};
 };
 $("again").onclick=()=>{intro();scr.scrollIntoView({behavior:"smooth"})};
